@@ -1,14 +1,13 @@
-const path = require("node:path");
-const http = require("node:http");
-const { default: fsRoutes } = require("fs-routes");
-const radix3 = require("radix3");
+import path from "node:path";
+import http from "node:http";
+import fsRoutes from "fs-routes";
+import radix3 from "radix3";
 
 const router = fsRoutes(path.join(__dirname, "routes"), {
   glob: "**/*.{js,tsx}",
   indexFileRegExp: /(?:index)?\.(js|tsx)$/,
 }).reduce((router, { path, route }) => {
   router.insert(route, path);
-  console.log({ route, path });
   return router;
 }, radix3.createRouter());
 

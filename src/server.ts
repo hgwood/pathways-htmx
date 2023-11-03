@@ -1,14 +1,14 @@
 import http from "node:http";
-import { createRouter } from "radix3";
-import scanRouteFiles from "./scanRouteFiles";
-import moduleFsSibling from "./utils/moduleFsSibling";
+import * as radix3 from "radix3";
+import scanRouteFiles from "./utils/scanRouteFiles";
+import composeModuleFsSiblingPath from "./utils/moduleFsSibling";
 
 const router = scanRouteFiles(
-  moduleFsSibling(import.meta.url, "routes")
+  composeModuleFsSiblingPath(import.meta.url, "routes")
 ).reduce((router, { module, route }) => {
   router.insert(route, { module });
   return router;
-}, createRouter());
+}, radix3.createRouter());
 
 const server = http.createServer(async (req, res) => {
   const routeMatch = router.lookup(req.url ?? "");

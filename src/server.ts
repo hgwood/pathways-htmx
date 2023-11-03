@@ -11,7 +11,8 @@ const router = scanRouteFiles(
 }, radix3.createRouter());
 
 const server = http.createServer(async (req, res) => {
-  const routeMatch = router.lookup(req.url ?? "");
+  const url = new URL(req.url ?? "", "http://example.com");
+  const routeMatch = router.lookup(url.pathname);
   if (!routeMatch) {
     res.writeHead(404);
     res.end();

@@ -2,8 +2,6 @@ import http from "node:http";
 import * as elements from "typed-html";
 import * as streamConsumers from "node:stream/consumers";
 
-const stuff: string[] = [];
-
 export const get: http.RequestListener = (req, res) => {
   res.writeHead(200, { "Content-Type": "text/html" });
   res.end(
@@ -16,11 +14,7 @@ export const get: http.RequestListener = (req, res) => {
       </form>
       <article>
         <h1>Stuff</h1>
-        <ul id="stuff">
-          {stuff.map((s) => (
-            <li>s</li>
-          ))}
-        </ul>
+        <ul id="stuff"></ul>
       </article>
     </div>
   );
@@ -29,10 +23,6 @@ export const get: http.RequestListener = (req, res) => {
 export const post: http.RequestListener = async (req, res) => {
   const form = new URLSearchParams(await streamConsumers.text(req));
   const title = form.get("title");
-  if (title) {
-    stuff.push(title);
-  }
-  // res.writeHead(302, { location: "/html" });
   res.writeHead(200);
   res.end(<li>{title}</li>);
 };

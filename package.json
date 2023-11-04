@@ -7,11 +7,13 @@
     "dev": "tsx watch src/server.ts"
   },
   "dependencies": {
-    "radix3": "^1.1.0",
-    "typed-html": "^3.0.1"
+    "@kitajs/html": "^3.0.5",
+    "radix3": "^1.1.0"
   },
   "devDependencies": {
+    "@kitajs/ts-html-plugin": "^1.3.0",
     "@types/node": "^20.8.10",
-    "tsx": "^3.14.0"
+    "tsx": "^3.14.0",
+    "typescript": "^5.2.2"
   }
 }

@@ -1,6 +1,6 @@
 import http from "node:http";
-import * as elements from "typed-html";
 import * as streamConsumers from "node:stream/consumers";
+import { Html } from "@kitajs/html";
 
 const stuff: string[] = [];
 
@@ -24,7 +24,7 @@ export const get: http.RequestListener = (req, res) => {
         <h1 id="title">{stuff.length} things</h1>
         <ul id="stuff">
           {stuff.map((thing) => (
-            <li>{thing}</li>
+            <li safe>{thing}</li>
           ))}
         </ul>
       </article>
@@ -40,7 +40,9 @@ export const post: http.RequestListener = async (req, res) => {
   res.end(
     <div>
       <h1 id="title">{stuff.length} things</h1>
-      <li id="elem">{title}</li>
+      <li id="elem" safe>
+        {title}
+      </li>
     </div>
   );
 };

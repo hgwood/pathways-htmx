@@ -16,6 +16,8 @@
     "lib": ["es2022"],
 
     "jsx": "react",
-    "jsxFactory": "elements.createElement"
+    "jsxFactory": "Html.createElement",
+    "jsxFragmentFactory": "Html.Fragment",
+    "plugins": [{ "name": "@kitajs/ts-html-plugin" }]
   }
 }

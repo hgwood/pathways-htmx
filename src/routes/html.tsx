@@ -1,14 +1,14 @@
 import http from "node:http";
 import * as streamConsumers from "node:stream/consumers";
 import { Html } from "@kitajs/html";
+import { Page } from "../components/Page";
 
 const stuff: string[] = [];
 
 export const get: http.RequestListener = (req, res) => {
   res.writeHead(200, { "Content-Type": "text/html" });
   res.end(
-    <div>
-      <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+    <Page>
       <form
         hx-post="/html"
         hx-target="#stuff"
@@ -28,7 +28,7 @@ export const get: http.RequestListener = (req, res) => {
           ))}
         </ul>
       </article>
-    </div>
+    </Page>
   );
 };
 

@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { db, filières } from "../../db/db";
 import type { RouteHandler } from "../../utils/route";
 
@@ -8,9 +8,11 @@ export const get: RouteHandler = async (req, res, { params }) => {
     res.end();
     return;
   }
-  const filière = await db().query.filières.findFirst({
-    where: eq(filières.id, params.id),
-  });
+  const [filière] = await db()
+    .select()
+    .from(filières)
+    .where(sql`${filières.id} = ${params.id}`)
+    .limit(1);
   if (!filière) {
     res.writeHead(404);
     res.end();

@@ -1,10 +1,7 @@
 import { Html } from "@kitajs/html";
-import type { PropsWithChildren } from "@kitajs/html";
+import type { Component } from "@kitajs/html";
 
-export function Page({
-  title,
-  children,
-}: PropsWithChildren<{ title?: string }>) {
+export const Page: Component<{ title?: string }> = ({ title, children }) => {
   return (
     <>
       {"<!doctype html>"}
@@ -22,4 +19,4 @@ export function Page({
       </html>
     </>
   );
-}
+};

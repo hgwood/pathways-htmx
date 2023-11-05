@@ -25,7 +25,7 @@ const server = http.createServer(async (req, res) => {
     res.end();
     return;
   }
-  routeFunction(req, res);
+  routeFunction(req, res, routeMatch);
 });
 
 server.listen(4500, () => {

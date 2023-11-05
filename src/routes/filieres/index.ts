@@ -1,5 +1,5 @@
 import http from "node:http";
-import { db, filières } from "../db/schema";
+import { db, filières } from "../../db/schema";
 
 export const get: http.RequestListener = async (req, res) => {
   const allFilières = await db().select().from(filières);

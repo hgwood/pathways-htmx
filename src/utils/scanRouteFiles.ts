@@ -3,14 +3,17 @@ import path from "node:path";
 
 export default function scanRouteFiles(rootDir: string) {
   return fs
-    .readdirSync(rootDir, { recursive: true, encoding: "utf-8" })
-    .map((routeFilePath) => {
-      const route =
-        "/" +
-        path.join(
-          path.dirname(routeFilePath),
-          path.basename(routeFilePath, path.extname(routeFilePath))
-        );
-      return { route, module: path.join(rootDir, routeFilePath) };
+    .readdirSync(rootDir, {
+      recursive: true,
+      withFileTypes: true,
+      encoding: "utf-8",
+    })
+    .filter((entry) => entry.isFile())
+    .map((entry) => {
+      const nameNoExt = path.basename(entry.name, path.extname(entry.name));
+      const isIndex = nameNoExt === "index";
+      const relative = path.relative(rootDir, entry.path);
+      const route = "/" + (isIndex ? relative : path.join(relative, nameNoExt));
+      return { route, module: path.join(entry.path, entry.name) };
     });
 }

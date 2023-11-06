@@ -25,15 +25,15 @@ export const statusCode: HttpResponseWriter<
   } else if (typeof body === "string") {
     headers["content-type"] ??= "text/plain";
     res.writeHead(statusCode, headers);
-    return res.end(body);
+    return res.end(body, "utf-8");
   } else {
     headers["content-type"] ??= "application/json";
     res.writeHead(statusCode, headers);
-    return res.end(JSON.stringify(body));
+    return res.end(JSON.stringify(body), "utf-8");
   }
 };
 
-type HttpResponseWriter<TArgs extends any[] = []> = (
+type HttpResponseWriter<TArgs extends unknown[] = []> = (
   res: NodejsHttpServerResponse,
   ...args: TArgs
 ) => void;

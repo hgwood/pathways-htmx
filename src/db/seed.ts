@@ -1,20 +1,20 @@
 import { getTableColumns, sql, type Table } from "drizzle-orm";
-import { db, filières, ue } from "./db";
+import { db, $filières, $ue } from "./db";
 
 await db()
-  .insert(filières)
+  .insert($filières)
   .values({
     id: 1,
     nomInterne: "Histoire",
     nomOfficiel: "Sciences Humaines et Sociales mention Histoire",
   })
   .onConflictDoUpdate({
-    target: filières.id,
-    set: allColumns(filières),
+    target: $filières.id,
+    set: allColumns($filières),
   });
 
 await db()
-  .insert(ue)
+  .insert($ue)
   .values([
     {
       id: 1,
@@ -42,8 +42,8 @@ await db()
     },
   ])
   .onConflictDoUpdate({
-    target: ue.id,
-    set: allColumns(ue),
+    target: $ue.id,
+    set: allColumns($ue),
   });
 
 function allColumns<T extends Table>(table: T) {

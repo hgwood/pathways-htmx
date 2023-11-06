@@ -1,12 +1,12 @@
-import http from "node:http";
 import * as streamConsumers from "node:stream/consumers";
 import { Html } from "@kitajs/html";
 import { Page } from "../components/Page";
 import { html } from "../utils/httpResponse";
+import type { RouteHandler } from "../utils/route";
 
 const stuff: string[] = [];
 
-export const get: http.RequestListener = (req, res) => {
+export const get: RouteHandler = (req, res) => {
   return html(
     res,
     <Page>
@@ -33,7 +33,7 @@ export const get: http.RequestListener = (req, res) => {
   );
 };
 
-export const post: http.RequestListener = async (req, res) => {
+export const post: RouteHandler = async (req, res) => {
   const form = new URLSearchParams(await streamConsumers.text(req));
   const title = form.get("title") || "untitled";
   stuff.push(title);

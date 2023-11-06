@@ -7,6 +7,7 @@ import { methodNotAllowed, notFound } from "./utils/httpResponse";
 const router = scanRouteFiles(
   composeModuleFsSiblingPath(import.meta.url, "routes")
 ).reduce((router, { module, route }) => {
+  console.log(`insert route: ${route}`);
   router.insert(route, { module });
   return router;
 }, radix3.createRouter());
@@ -26,5 +27,5 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(4500, () => {
-  console.log("listening", Object.keys(router.ctx.staticRoutesMap));
+  console.log("listening");
 });

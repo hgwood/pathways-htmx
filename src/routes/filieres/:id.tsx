@@ -1,7 +1,8 @@
 import { sql } from "drizzle-orm";
+import { Html } from "@kitajs/html";
 import { db, filières } from "../../db/db";
 import type { RouteHandler } from "../../utils/route";
-import { notFound, ok } from "../../utils/httpResponse";
+import { html, notFound } from "../../utils/httpResponse";
 
 export const get: RouteHandler = async (req, res, { params }) => {
   if (!params?.id) {
@@ -15,5 +16,14 @@ export const get: RouteHandler = async (req, res, { params }) => {
   if (!filière) {
     return notFound(res);
   }
-  return ok(res, filière);
+  return html(
+    res,
+    <>
+      <h1>
+        <span safe>{filière.nom}</span>
+        <span> </span>
+        <small safe>{filière.nomOfficiel}</small>
+      </h1>
+    </>
+  );
 };

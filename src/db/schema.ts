@@ -33,6 +33,8 @@ export const $semestresRelations = relations($semestres, ({ one, many }) => ({
   ue: many($ue),
 }));
 
+export type Semestre = typeof $semestres.$inferSelect;
+
 export const $ue = sqliteTable(
   "ue",
   {
@@ -54,3 +56,5 @@ export const $ueRelations = relations($ue, ({ one }) => ({
     references: [$semestres.id],
   }),
 }));
+
+export type UE = typeof $ue.$inferSelect;

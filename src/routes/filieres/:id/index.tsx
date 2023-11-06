@@ -1,9 +1,10 @@
 import { eq } from "drizzle-orm";
 import { Html } from "@kitajs/html";
-import { db, $filières } from "../../db/db";
-import type { RouteHandler } from "../../utils/route";
-import { html, notFound } from "../../utils/httpResponse";
-import { Page } from "../../components/Page";
+import { db, $filières } from "../../../db/db";
+import type { RouteHandler } from "../../../utils/route";
+import { html, notFound } from "../../../utils/httpResponse";
+import { Page } from "../../../components/Page";
+import { SemestreTabs } from "../../../components/SemestreTabs";
 
 export const get: RouteHandler = async (req, res, { params }) => {
   if (!params?.id) {
@@ -19,6 +20,7 @@ export const get: RouteHandler = async (req, res, { params }) => {
       semestres: {
         columns: {
           numéro: true,
+          idFilière: true,
         },
         with: {
           ue: {
@@ -34,6 +36,7 @@ export const get: RouteHandler = async (req, res, { params }) => {
   if (!filière) {
     return notFound(res);
   }
+  const firstSemestre = filière.semestres[0];
   return html(
     res,
     <Page>
@@ -42,21 +45,13 @@ export const get: RouteHandler = async (req, res, { params }) => {
         <span> </span>
         <small safe>{filière.nomOfficiel}</small>
       </h1>
-      <ul>
-        {filière.semestres.map((semestre) => (
-          <li>
-            Semestre {semestre.numéro}
-            <ul>
-              {semestre.ue.map((ue) => (
-                <li>
-                  UE {semestre.numéro}
-                  {ue.numéro} <span safe>{ue.nom}</span>
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))}
-      </ul>
+      {firstSemestre ? (
+        ((
+          <SemestreTabs semestres={filière.semestres} active={firstSemestre} />
+        ) as "safe")
+      ) : (
+        <span>Aucun semestre</span>
+      )}
     </Page>
   );
 };

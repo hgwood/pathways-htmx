@@ -1,5 +1,5 @@
 import { getTableColumns, sql, type Table } from "drizzle-orm";
-import { db, $filières, $ue } from "./db";
+import { db, $filières, $ue, $semestres } from "./db";
 
 await db()
   .insert($filières)
@@ -14,29 +14,61 @@ await db()
   });
 
 await db()
+  .insert($semestres)
+  .values([
+    { id: 1, idFilière: 1, numéro: 1 },
+    { id: 2, idFilière: 1, numéro: 2 },
+  ])
+  .onConflictDoUpdate({ target: $semestres.id, set: allColumns($semestres) });
+
+await db()
   .insert($ue)
   .values([
     {
       id: 1,
-      idFilière: 1,
+      idSemestre: 1,
       numéro: 1,
       nom: "Enseignements Fondamentaux",
     },
     {
       id: 2,
-      idFilière: 1,
+      idSemestre: 1,
       numéro: 2,
       nom: "Enseignements Complémentaires",
     },
     {
       id: 3,
-      idFilière: 1,
+      idSemestre: 1,
       numéro: 3,
       nom: "Enseignements Transversaux",
     },
     {
       id: 4,
-      idFilière: 1,
+      idSemestre: 1,
+      numéro: 4,
+      nom: "Matières Facultatives (Bonus) - 1 au choix",
+    },
+    {
+      id: 5,
+      idSemestre: 2,
+      numéro: 1,
+      nom: "Enseignements Fondamentaux",
+    },
+    {
+      id: 6,
+      idSemestre: 2,
+      numéro: 2,
+      nom: "Enseignements Complémentaires",
+    },
+    {
+      id: 7,
+      idSemestre: 2,
+      numéro: 3,
+      nom: "Enseignements Transversaux",
+    },
+    {
+      id: 8,
+      idSemestre: 2,
       numéro: 4,
       nom: "Matières Facultatives (Bonus) - 1 au choix",
     },

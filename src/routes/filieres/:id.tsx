@@ -16,10 +16,17 @@ export const get: RouteHandler = async (req, res, { params }) => {
     },
     where: eq($filières.id, params.id),
     with: {
-      ue: {
+      semestres: {
         columns: {
-          nom: true,
           numéro: true,
+        },
+        with: {
+          ue: {
+            columns: {
+              nom: true,
+              numéro: true,
+            },
+          },
         },
       },
     },
@@ -36,9 +43,17 @@ export const get: RouteHandler = async (req, res, { params }) => {
         <small safe>{filière.nomOfficiel}</small>
       </h1>
       <ul>
-        {filière.ue.map((ue) => (
+        {filière.semestres.map((semestre) => (
           <li>
-            UE{ue.numéro} <span safe>{ue.nom}</span>
+            Semestre {semestre.numéro}
+            <ul>
+              {semestre.ue.map((ue) => (
+                <li>
+                  UE {semestre.numéro}
+                  {ue.numéro} <span safe>{ue.nom}</span>
+                </li>
+              ))}
+            </ul>
           </li>
         ))}
       </ul>

@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "db:push": "drizzle-kit push:sqlite"
+    "db:push": "drizzle-kit push:sqlite",
+    "db:seed": "tsx src/db/seed.ts"
   },
   "dependencies": {
     "@kitajs/html": "^3.0.5",

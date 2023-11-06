@@ -20,7 +20,7 @@ export const get: RouteHandler = async (req, res, { params }) => {
     res,
     <>
       <h1>
-        <span safe>{filière.nom}</span>
+        <span safe>{filière.nomInterne}</span>
         <span> </span>
         <small safe>{filière.nomOfficiel}</small>
       </h1>

@@ -1,12 +1,11 @@
 import { eq, sql } from "drizzle-orm";
 import { db, filières } from "../../db/db";
 import type { RouteHandler } from "../../utils/route";
+import { notFound, ok } from "../../utils/httpResponse";
 
 export const get: RouteHandler = async (req, res, { params }) => {
   if (!params?.id) {
-    res.writeHead(404);
-    res.end();
-    return;
+    return notFound(res);
   }
   const [filière] = await db()
     .select()
@@ -14,10 +13,7 @@ export const get: RouteHandler = async (req, res, { params }) => {
     .where(sql`${filières.id} = ${params.id}`)
     .limit(1);
   if (!filière) {
-    res.writeHead(404);
-    res.end();
-    return;
+    return notFound(res);
   }
-  res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(JSON.stringify(filière));
+  return ok(res, filière);
 };

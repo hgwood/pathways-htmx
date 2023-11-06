@@ -2,12 +2,13 @@ import http from "node:http";
 import * as streamConsumers from "node:stream/consumers";
 import { Html } from "@kitajs/html";
 import { Page } from "../components/Page";
+import { html } from "../utils/httpResponse";
 
 const stuff: string[] = [];
 
 export const get: http.RequestListener = (req, res) => {
-  res.writeHead(200, { "Content-Type": "text/html" });
-  res.end(
+  return html(
+    res,
     <Page>
       <form
         hx-post="/html"
@@ -36,8 +37,8 @@ export const post: http.RequestListener = async (req, res) => {
   const form = new URLSearchParams(await streamConsumers.text(req));
   const title = form.get("title") || "untitled";
   stuff.push(title);
-  res.writeHead(200);
-  res.end(
+  return html(
+    res,
     <div>
       <h1 id="title">{stuff.length} things</h1>
       <li id="elem" safe>

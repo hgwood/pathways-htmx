@@ -1,6 +1,6 @@
 import http from "node:http";
+import { ok } from "../utils/httpResponse";
 
 export const get: http.RequestListener = (req, res) => {
-  res.writeHead(200);
-  res.end("Hello");
+  return ok(res, "Hello");
 };

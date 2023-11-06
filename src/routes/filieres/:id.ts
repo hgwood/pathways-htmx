@@ -1,4 +1,4 @@
-import { eq, sql } from "drizzle-orm";
+import { sql } from "drizzle-orm";
 import { db, filières } from "../../db/db";
 import type { RouteHandler } from "../../utils/route";
 import { notFound, ok } from "../../utils/httpResponse";

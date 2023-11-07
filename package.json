@@ -11,6 +11,7 @@
   "dependencies": {
     "@kitajs/html": "^3.0.5",
     "better-sqlite3": "^9.0.0",
+    "classnames": "^2.3.2",
     "drizzle-orm": "^0.28.6",
     "radix3": "^1.1.0",
     "serve-handler": "^6.1.5"

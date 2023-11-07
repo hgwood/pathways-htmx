@@ -45,13 +45,20 @@ export const get: RouteHandler = async (req, res, { params }) => {
         <span> </span>
         <small safe>{filière.nomOfficiel}</small>
       </h1>
-      {firstSemestre ? (
-        ((
-          <SemestreTabs semestres={filière.semestres} active={firstSemestre} />
-        ) as "safe")
-      ) : (
-        <span>Aucun semestre</span>
-      )}
+      <div class="card">
+        <div class="card-body">
+          {firstSemestre ? (
+            ((
+              <SemestreTabs
+                semestres={filière.semestres}
+                active={firstSemestre}
+              />
+            ) as "safe")
+          ) : (
+            <span>Aucun semestre</span>
+          )}
+        </div>
+      </div>
     </Page>
   );
 };

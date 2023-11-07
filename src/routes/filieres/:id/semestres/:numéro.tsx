@@ -6,7 +6,6 @@ import { $semestres, db } from "../../../../db/db";
 import { eq } from "drizzle-orm";
 
 export const get: RouteHandler = async (req, res, { params }) => {
-  console.log({ params });
   if (!params?.id || !params?.numéro) {
     return notFound(res);
   }
@@ -28,8 +27,6 @@ export const get: RouteHandler = async (req, res, { params }) => {
   const active = semestres.find(
     ({ numéro }) => String(numéro) === params.numéro
   );
-  console.log({ active, semestres });
-
   if (!active) {
     return notFound(res);
   }

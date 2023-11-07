@@ -1,7 +1,9 @@
 import { Html } from "@kitajs/html";
 import type { Component } from "@kitajs/html";
+import cn from "classnames";
 import type { Semestre } from "../db/schema";
 import { SemestreTab } from "./SemestreTab";
+import { Spinner } from "./Spinner";
 
 type Props<TComponent> = TComponent extends Component<infer TProps>
   ? TProps
@@ -9,24 +11,28 @@ type Props<TComponent> = TComponent extends Component<infer TProps>
 
 export const SemestreTabs: Component<{
   semestres: Pick<Semestre, "numéro" | "idFilière">[];
-  active: Props<typeof SemestreTab>["semestre"];
+  active: Pick<Semestre, "numéro" | "idFilière"> &
+    Props<typeof SemestreTab>["semestre"];
 }> = ({ semestres, active }) => {
   return (
     <div id="semester-tabs">
-      <ul>
+      <ul class="nav nav-underline">
         {semestres.map((semestre) => (
-          <li>
-            <button
+          <li class="nav-item">
+            <a
+              class={cn("nav-link", { active: semestre === active })}
+              aria-current="page"
+              href="#"
               hx-get={`${semestre.idFilière}/semestres/${semestre.numéro}`}
               hx-target="#semester-tabs"
               hx-indicator="#semester-tabs"
             >
               Semestre {semestre.numéro}
-            </button>
+            </a>
           </li>
         ))}
       </ul>
-      <span class="htmx-indicator">loading</span>
+      <Spinner />
       <SemestreTab class="htmx-request-hide" semestre={active} />
     </div>
   );

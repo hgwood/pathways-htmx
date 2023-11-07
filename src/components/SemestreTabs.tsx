@@ -19,13 +19,15 @@ export const SemestreTabs: Component<{
             <button
               hx-get={`${semestre.idFilière}/semestres/${semestre.numéro}`}
               hx-target="#semester-tabs"
+              hx-indicator="#semester-tabs"
             >
               Semestre {semestre.numéro}
             </button>
           </li>
         ))}
       </ul>
-      <SemestreTab semestre={active} />
+      <span class="htmx-indicator">loading</span>
+      <SemestreTab class="htmx-request-hide" semestre={active} />
     </div>
   );
 };

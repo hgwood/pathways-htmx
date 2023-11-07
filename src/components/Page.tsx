@@ -14,6 +14,7 @@ export const Page: Component<{ title?: string }> = ({ title, children }) => {
           />
           <title safe>{title || "Hello World!"}</title>
           <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+          <link rel="stylesheet" href="/assets/style.css" />
         </head>
         <body>{children}</body>
       </html>

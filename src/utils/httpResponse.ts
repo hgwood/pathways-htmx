@@ -1,11 +1,21 @@
 import http from "node:http";
+import etag from "etag";
 
 export const ok: HttpResponseWriter<[unknown]> = (res, body) => {
   return statusCode(res, 200, {}, body);
 };
 
-export const html: HttpResponseWriter<[unknown]> = (res, body) => {
-  return statusCode(res, 200, { "content-type": "text/html" }, body);
+export const html: HttpResponseWriter<[unknown, HttpHeaders?]> = (
+  res,
+  body,
+  headers = {}
+) => {
+  return statusCode(
+    res,
+    200,
+    { "content-type": "text/html", ...headers },
+    body
+  );
 };
 
 export const notFound: HttpResponseWriter = (res) => {
@@ -23,13 +33,24 @@ export const statusCode: HttpResponseWriter<
     res.writeHead(statusCode, headers);
     return res.end();
   } else if (typeof body === "string") {
+    headers["etag"] ??= etag(body);
+    if (headers["etag"] === res.req.headers["if-none-match"]) {
+      res.writeHead(304);
+      return res.end();
+    }
     headers["content-type"] ??= "text/plain";
     res.writeHead(statusCode, headers);
     return res.end(body, "utf-8");
   } else {
+    const stringBody = JSON.stringify(body);
+    headers["etag"] ??= etag(stringBody);
+    if (headers["etag"] === res.req.headers["if-none-match"]) {
+      res.writeHead(304);
+      return res.end();
+    }
     headers["content-type"] ??= "application/json";
     res.writeHead(statusCode, headers);
-    return res.end(JSON.stringify(body), "utf-8");
+    return res.end(stringBody, "utf-8");
   }
 };
 

@@ -3,7 +3,6 @@ import type { Component } from "@kitajs/html";
 import cn from "classnames";
 import type { Semestre } from "../db/schema";
 import { SemestreTab } from "./SemestreTab";
-import { Spinner } from "./Spinner";
 
 type Props<TComponent> = TComponent extends Component<infer TProps>
   ? TProps
@@ -25,15 +24,13 @@ export const SemestreTabs: Component<{
               href="#"
               hx-get={`${semestre.idFilière}/semestres/${semestre.numéro}`}
               hx-target="#semester-tabs"
-              hx-indicator="#semester-tabs"
             >
               Semestre {semestre.numéro}
             </a>
           </li>
         ))}
       </ul>
-      <Spinner />
-      <SemestreTab class="htmx-request-hide" semestre={active} />
+      <SemestreTab semestre={active} />
     </div>
   );
 };

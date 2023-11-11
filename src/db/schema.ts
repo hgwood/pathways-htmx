@@ -11,6 +11,8 @@ export const $filièresRelations = relations($filières, ({ many }) => ({
   semestres: many($semestres),
 }));
 
+export type Filière = typeof $filières.$inferSelect;
+
 export const $semestres = sqliteTable(
   "semestre",
   {
@@ -33,7 +35,13 @@ export const $semestresRelations = relations($semestres, ({ one, many }) => ({
   ue: many($ue),
 }));
 
-export type Semestre = typeof $semestres.$inferSelect;
+export type Semestre<KS extends KeySelect<Ue> | AllFields = AllFields> =
+  Selectable<
+    typeof $semestres.$inferSelect & {
+      ue: Ue[];
+    },
+    KS
+  >;
 
 export const $ue = sqliteTable(
   "ue",
@@ -57,4 +65,34 @@ export const $ueRelations = relations($ue, ({ one }) => ({
   }),
 }));
 
-export type UE = typeof $ue.$inferSelect;
+export type Ue<KS extends KeySelect<Ue> | AllFields = AllFields> = Selectable<
+  typeof $ue.$inferSelect & {
+    semestre: Semestre;
+  },
+  KS
+>;
+
+type Selectable<
+  T extends object,
+  KS extends KeySelect<T> | AllFields
+> = KS extends AllFields ? T : KS extends KeySelect<T> ? Select<T, KS> : never;
+
+type AllFields = "*";
+
+type KeySelect<T extends object> = {
+  [K in keyof T]?: T[K] extends object
+    ? T[K] extends object[]
+      ? KeySelect<T[K][number]>
+      : KeySelect<T[K]>
+    : boolean;
+};
+
+type Select<T extends object, KS extends KeySelect<T>> = {
+  [K in keyof T as KS[K] extends true | object ? K : never]: T[K] extends object
+    ? KS[K] extends object
+      ? T[K] extends object[]
+        ? Select<T[K][number], KS[K]>[]
+        : Select<T[K], KS[K]>
+      : T[K]
+    : T[K];
+};

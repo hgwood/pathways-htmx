@@ -2,16 +2,12 @@ import { Html } from "@kitajs/html";
 import type { Component } from "@kitajs/html";
 import cn from "classnames";
 import type { Semestre } from "../db/schema";
-import { SemestreTab } from "./SemestreTab";
-
-type Props<TComponent> = TComponent extends Component<infer TProps>
-  ? TProps
-  : never;
+import { SemestreTab, type SemestreTabProps } from "./SemestreTab";
 
 export const SemestreTabs: Component<{
-  semestres: Pick<Semestre, "numéro" | "idFilière">[];
-  active: Pick<Semestre, "numéro" | "idFilière"> &
-    Props<typeof SemestreTab>["semestre"];
+  semestres: Semestre<{ idFilière: true; numéro: true }>[];
+  active: Semestre<{ idFilière: true; numéro: true }> &
+    SemestreTabProps["semestre"];
 }> = ({ semestres, active }) => {
   return (
     <div id="semester-tabs">

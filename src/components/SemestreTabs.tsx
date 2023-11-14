@@ -1,7 +1,7 @@
 import { Html } from "@kitajs/html";
 import type { Component } from "@kitajs/html";
 import cn from "classnames";
-import type { Semestre } from "../db/schema";
+import type { Semestre } from "../db/types";
 import { SemestreTab, type SemestreTabProps } from "./SemestreTab";
 
 export const SemestreTabs: Component<{

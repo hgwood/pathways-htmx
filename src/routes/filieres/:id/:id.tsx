@@ -28,6 +28,20 @@ export const get: RouteHandler = async (req, res, { params }) => {
               nom: true,
               numéro: true,
             },
+            with: {
+              ec: {
+                columns: {
+                  numéro: true,
+                },
+                with: {
+                  matière: {
+                    columns: {
+                      nom: true,
+                    },
+                  },
+                },
+              },
+            },
           },
         },
       },

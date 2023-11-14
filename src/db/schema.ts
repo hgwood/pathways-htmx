@@ -11,8 +11,6 @@ export const $filièresRelations = relations($filières, ({ many }) => ({
   semestres: many($semestres),
 }));
 
-export type Filière = typeof $filières.$inferSelect;
-
 export const $semestres = sqliteTable(
   "semestre",
   {
@@ -35,14 +33,6 @@ export const $semestresRelations = relations($semestres, ({ one, many }) => ({
   ue: many($ue),
 }));
 
-export type Semestre<KS extends KeySelect<Ue> | AllFields = AllFields> =
-  Selectable<
-    typeof $semestres.$inferSelect & {
-      ue: Ue[];
-    },
-    KS
-  >;
-
 export const $ue = sqliteTable(
   "ue",
   {
@@ -58,41 +48,43 @@ export const $ue = sqliteTable(
   })
 );
 
-export const $ueRelations = relations($ue, ({ one }) => ({
+export const $ueRelations = relations($ue, ({ one, many }) => ({
   semestre: one($semestres, {
     fields: [$ue.idSemestre],
     references: [$semestres.id],
   }),
+  ec: many($ec),
 }));
 
-export type Ue<KS extends KeySelect<Ue> | AllFields = AllFields> = Selectable<
-  typeof $ue.$inferSelect & {
-    semestre: Semestre;
+export const $ec = sqliteTable(
+  "ec",
+  {
+    id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
+    idUe: integer("id_matière", { mode: "number" })
+      .notNull()
+      .references(() => $ue.id),
+    idMatière: integer("id_matière", { mode: "number" })
+      .notNull()
+      .references(() => $matières.id),
+    numéro: integer("numéro", { mode: "number" }).notNull(),
   },
-  KS
->;
+  (table) => ({
+    uniqueNuméroByUe: unique().on(table.idUe, table.numéro),
+  })
+);
 
-type Selectable<
-  T extends object,
-  KS extends KeySelect<T> | AllFields
-> = KS extends AllFields ? T : KS extends KeySelect<T> ? Select<T, KS> : never;
+export const $ecRelations = relations($ec, ({ one }) => ({
+  ue: one($ue, {
+    fields: [$ec.idUe],
+    references: [$ue.id],
+  }),
+  matière: one($matières, {
+    fields: [$ec.idMatière],
+    references: [$matières.id],
+  }),
+}));
 
-type AllFields = "*";
-
-type KeySelect<T extends object> = {
-  [K in keyof T]?: T[K] extends object
-    ? T[K] extends object[]
-      ? KeySelect<T[K][number]>
-      : KeySelect<T[K]>
-    : boolean;
-};
-
-type Select<T extends object, KS extends KeySelect<T>> = {
-  [K in keyof T as KS[K] extends true | object ? K : never]: T[K] extends object
-    ? KS[K] extends object
-      ? T[K] extends object[]
-        ? Select<T[K][number], KS[K]>[]
-        : Select<T[K], KS[K]>
-      : T[K]
-    : T[K];
-};
+export const $matières = sqliteTable("matières", {
+  id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
+  nom: text("nom").notNull(),
+});

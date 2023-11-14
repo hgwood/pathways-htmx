@@ -1,5 +1,5 @@
 import { getTableColumns, sql, type Table } from "drizzle-orm";
-import { db, $filières, $ue, $semestres } from "./db";
+import { db, $filières, $ue, $semestres, $ec, $matières } from "./db";
 
 await db()
   .insert($filières)
@@ -76,6 +76,34 @@ await db()
   .onConflictDoUpdate({
     target: $ue.id,
     set: allColumns($ue),
+  });
+
+await db()
+  .insert($matières)
+  .values([
+    {
+      id: 1,
+      nom: "Français",
+    },
+  ])
+  .onConflictDoUpdate({
+    target: $matières.id,
+    set: allColumns($matières),
+  });
+
+await db()
+  .insert($ec)
+  .values([
+    {
+      id: 1,
+      idUe: 1,
+      idMatière: 1,
+      numéro: 1,
+    },
+  ])
+  .onConflictDoUpdate({
+    target: $ec.id,
+    set: allColumns($ec),
   });
 
 function allColumns<T extends Table>(table: T) {

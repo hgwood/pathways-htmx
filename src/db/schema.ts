@@ -60,7 +60,7 @@ export const $ec = sqliteTable(
   "ec",
   {
     id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
-    idUe: integer("id_matière", { mode: "number" })
+    idUe: integer("id_ue", { mode: "number" })
       .notNull()
       .references(() => $ue.id),
     idMatière: integer("id_matière", { mode: "number" })

@@ -18,15 +18,20 @@ export const SemestreTab: Component<SemestreTabProps> = ({
   ...props
 }) => {
   return (
-    <ul {...props}>
+    <ul class="list-unstyled" {...props}>
       {semestre.ue.map((ue) => (
         <li>
-          UE {semestre.numéro}
-          {ue.numéro} <span safe>{ue.nom}</span>
+          <h3>
+            UE {semestre.numéro}
+            {ue.numéro} <span safe>{ue.nom}</span>
+          </h3>
           <ul>
             {ue.ec.map((ec) => (
               <li>
-                {ec.numéro} <span safe>{ec.matière.nom}</span>
+                <span safe class="badge bg-info">
+                  {String(ec.numéro).padStart(2, "0")}
+                </span>{" "}
+                <span safe>{ec.matière.nom}</span>
               </li>
             ))}
           </ul>

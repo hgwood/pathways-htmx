@@ -1,3 +1,12 @@
 {
-    "typescript.tsdk": "node_modules/typescript/lib"
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "pathway-htmx",
+            "database": "${workspaceFolder:pathway-htmx}/db.sqlite"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
 }

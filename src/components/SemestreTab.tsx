@@ -18,7 +18,7 @@ export const SemestreTab: Component<SemestreTabProps> = ({
   ...props
 }) => {
   return (
-    <ul class="list-unstyled" {...props}>
+    <ul {...props}>
       {semestre.ue.map((ue) => (
         <li>
           <h3>
@@ -28,9 +28,6 @@ export const SemestreTab: Component<SemestreTabProps> = ({
           <ul>
             {ue.ec.map((ec) => (
               <li>
-                <span safe class="badge bg-info">
-                  {String(ec.numéro).padStart(2, "0")}
-                </span>{" "}
                 <span safe>{ec.matière.nom}</span>
               </li>
             ))}

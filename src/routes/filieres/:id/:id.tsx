@@ -58,18 +58,14 @@ export const get: RouteHandler = async (req, res, { params }) => {
         <span> </span>
         <small safe>{filière.nomOfficiel}</small>
       </h1>
-      <div class="card">
-        <div class="card-body">
-          <ul class="list-unstyled">
-            {filière.semestres.map((semestre) => (
-              <li>
-                <h2>Semestre {semestre.numéro}</h2>
-                <SemestreTab semestre={semestre} />
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+      <ul>
+        {filière.semestres.map((semestre) => (
+          <li>
+            <h2>Semestre {semestre.numéro}</h2>
+            <SemestreTab semestre={semestre} />
+          </li>
+        ))}
+      </ul>
     </Page>
   );
 };

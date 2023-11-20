@@ -1,6 +1,12 @@
 import { getTableColumns, sql, type Table } from "drizzle-orm";
 import { db, $filières, $ue, $semestres, $ec, $matières } from "./db";
 
+await db().delete($ec);
+await db().delete($matières);
+await db().delete($ue);
+await db().delete($semestres);
+await db().delete($filières);
+
 await db()
   .insert($filières)
   .values({
@@ -165,6 +171,34 @@ await db()
       id: 21,
       nom: "Théologie",
     },
+    {
+      id: 22,
+      nom: "Histoire Ancienne",
+    },
+    {
+      id: 23,
+      nom: "Chronologie",
+    },
+    {
+      id: 24,
+      nom: "Expression Orale : Introduction à l'Oral Historique",
+    },
+    {
+      id: 25,
+      nom: "Méthodologie Générale",
+    },
+    {
+      id: 26,
+      nom: "Culture Générale : Rhétorique - Discours Politique",
+    },
+    {
+      id: 27,
+      nom: "Projet Professionnel Etudiant",
+    },
+    {
+      id: 28,
+      nom: "Certification Voltaire (Préparation / Orthographe et Grammaire)",
+    },
   ])
   .onConflictDoUpdate({
     target: $matières.id,
@@ -175,6 +209,8 @@ await db()
 await db()
   .insert($ec)
   .values([
+    // Semestre 1
+    // UE 11
     {
       id: 1,
       idUe: 1,
@@ -199,6 +235,7 @@ await db()
       idMatière: 4,
       numéro: 4,
     },
+    // UE 12
     {
       id: 5,
       idUe: 2,
@@ -211,6 +248,7 @@ await db()
       idMatière: 6,
       numéro: 2,
     },
+    // UE 13
     {
       id: 7,
       idUe: 3,
@@ -253,6 +291,7 @@ await db()
       idMatière: 13,
       numéro: 9,
     },
+    // UE 14
     {
       id: 14,
       idUe: 4,
@@ -298,6 +337,155 @@ await db()
     {
       id: 21,
       idUe: 4,
+      idMatière: 21,
+      numéro: 18,
+    },
+    // Semestre 2
+    // UE 21
+    {
+      id: 21 + 1,
+      idUe: 5,
+      idMatière: 22,
+      numéro: 1,
+    },
+    {
+      id: 21 + 2,
+      idUe: 5,
+      idMatière: 2,
+      numéro: 2,
+    },
+    {
+      id: 21 + 3,
+      idUe: 5,
+      idMatière: 3,
+      numéro: 3,
+    },
+    {
+      id: 21 + 4,
+      idUe: 5,
+      idMatière: 4,
+      numéro: 4,
+    },
+    // UE 22
+    {
+      id: 21 + 5,
+      idUe: 6,
+      idMatière: 5,
+      numéro: 1,
+    },
+    {
+      id: 21 + 6,
+      idUe: 6,
+      idMatière: 23,
+      numéro: 2,
+    },
+    {
+      id: 21 + 7,
+      idUe: 6,
+      idMatière: 24,
+      numéro: 3,
+    },
+    {
+      id: 21 + 8,
+      idUe: 6,
+      idMatière: 25,
+      numéro: 17,
+    },
+    // UE 23
+    {
+      id: 21 + 2 + 7,
+      idUe: 7,
+      idMatière: 26,
+      numéro: 1,
+    },
+    {
+      id: 21 + 2 + 8,
+      idUe: 7,
+      idMatière: 27,
+      numéro: 2,
+    },
+    {
+      id: 21 + 2 + 9,
+      idUe: 7,
+      idMatière: 28,
+      numéro: 9,
+    },
+    {
+      id: 21 + 2 + 10,
+      idUe: 7,
+      idMatière: 9,
+      numéro: 4,
+    },
+    {
+      id: 21 + 2 + 11,
+      idUe: 7,
+      idMatière: 10,
+      numéro: 5,
+    },
+    {
+      id: 21 + 2 + 12,
+      idUe: 7,
+      idMatière: 11,
+      numéro: 6,
+    },
+    {
+      id: 21 + 2 + 13,
+      idUe: 7,
+      idMatière: 12,
+      numéro: 7,
+    },
+    {
+      id: 21 + 2 + 14,
+      idUe: 7,
+      idMatière: 13,
+      numéro: 8,
+    },
+    // UE 24
+    {
+      id: 21 + 3 + 14,
+      idUe: 8,
+      idMatière: 14,
+      numéro: 16,
+    },
+    {
+      id: 21 + 3 + 15,
+      idUe: 8,
+      idMatière: 15,
+      numéro: 14,
+    },
+    {
+      id: 21 + 3 + 16,
+      idUe: 8,
+      idMatière: 16,
+      numéro: 17,
+    },
+    {
+      id: 21 + 3 + 17,
+      idUe: 8,
+      idMatière: 17,
+      numéro: 19,
+    },
+    {
+      id: 21 + 3 + 18,
+      idUe: 8,
+      idMatière: 18,
+      numéro: 9,
+    },
+    {
+      id: 21 + 3 + 19,
+      idUe: 8,
+      idMatière: 19,
+      numéro: 15,
+    },
+    {
+      id: 21 + 3 + 20,
+      idUe: 8,
+      idMatière: 20,
+      numéro: 10,
+    },
+    {
+      id: 21 + 3 + 21,
+      idUe: 8,
       idMatière: 21,
       numéro: 18,
     },

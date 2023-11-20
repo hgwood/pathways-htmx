@@ -4,7 +4,7 @@ import { db, $filières } from "../../../db/db";
 import type { RouteHandler } from "../../../utils/route";
 import { html, notFound } from "../../../utils/httpResponse";
 import { Page } from "../../../components/Page";
-import { SemestreTabs } from "../../../components/SemestreTabs";
+import { SemestreTab } from "../../../components/SemestreTab";
 
 export const get: RouteHandler = async (req, res, { params }) => {
   if (!params?.id) {
@@ -50,7 +50,6 @@ export const get: RouteHandler = async (req, res, { params }) => {
   if (!filière) {
     return notFound(res);
   }
-  const firstSemestre = filière.semestres[0];
   return html(
     res,
     <Page>
@@ -61,16 +60,14 @@ export const get: RouteHandler = async (req, res, { params }) => {
       </h1>
       <div class="card">
         <div class="card-body">
-          {firstSemestre ? (
-            ((
-              <SemestreTabs
-                semestres={filière.semestres}
-                active={firstSemestre}
-              />
-            ) as "safe")
-          ) : (
-            <span>Aucun semestre</span>
-          )}
+          <ul class="list-unstyled">
+            {filière.semestres.map((semestre) => (
+              <li>
+                <h2>Semestre {semestre.numéro}</h2>
+                <SemestreTab semestre={semestre} />
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </Page>

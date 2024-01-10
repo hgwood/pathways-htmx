@@ -24,6 +24,10 @@ export const Page: Component<{ title?: string }> = ({ title, children }) => {
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/zephyr/bootstrap.min.css"
           ></link>
+          <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css"
+          ></link>
           <link rel="stylesheet" href="/assets/style.css"></link>
         </head>
         <body>

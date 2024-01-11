@@ -71,77 +71,213 @@ export const get: RouteHandler = async (req, res, { params }) => {
             </ul>
           </div>
           <div class="col">
-            <div class="container text-center">
-              <div class="row row-cols-3 card-group">
-                <div class="w-100">
-                  <h3>Topologie</h3>
-                </div>
-                <div class="col d-flex flex-column card">
-                  <h4>Cours</h4>
-                  <i class="fs-1 bi-alarm"></i>
-                  <div>3h</div>
-                  <ul>
-                    <li>M. Tartanpion</li>
-                    <li>Mme Trucmuche</li>
-                  </ul>
-                </div>
-                <div class="col d-flex flex-column card">
-                  <h4>TD</h4>
-                  <i class="fs-1 bi bi-award"></i>
-                  <div>3h</div>
-                  <ul>
-                    <li>Mme Dupont</li>
-                  </ul>
-                </div>
-                <div class="col d-flex flex-column card">
-                  <h4>TP</h4>
-                  <i class="fs-1 bi bi-pci-card"></i>
-                  <div>3h</div>
-                </div>
-              </div>
-              <div class="row row-cols-1 g-5">
-                <div class="col">
-                  <h3>ECTS</h3>
-                  <div class="fs-1">4</div>
-                </div>
-              </div>
-              <div class="row row-cols-3">
-                <h3 class="col w-100">Examens</h3>
-                <div class="col card">
-                  <div class="card-body">
-                    <h4>Ecrit</h4>
-                    <i class="fs-1 bi bi-award"></i>
-                    <div>3h</div>
-                    <div>Coefficient 3</div>
+            <form action="submit" method="POST">
+              <fieldset class="my-3">
+                <legend>Volume horaire</legend>
+                <div class="my-3">
+                  <label for="volumeHoraireCours" class="form-label">
+                    Cours
+                  </label>
+                  <div class="input-group">
+                    <input
+                      name="volumeHoraireCoursHeures"
+                      type="number"
+                      class="form-control"
+                      placeholder="Heures"
+                      aria-label="Cours : heures"
+                      min="0"
+                    ></input>
+                    <span class="input-group-text">h</span>
+                    <input
+                      name="volumeHoraireCoursMinutes"
+                      type="number"
+                      class="form-control"
+                      placeholder="Minutes"
+                      aria-label="Cours : minutes"
+                      step="15"
+                      min="0"
+                      max="45"
+                    ></input>
                   </div>
                 </div>
-                <div class="col">
-                  <div class="card pt-2">
-                    <i class=" card-img-top fs-1 bi bi-award"></i>
-                    <div class="card-body">
-                      <h5 class="card-title">Oral</h5>
-                      <p class="card-text">
-                        <div>1h</div>
-                        <div>Coefficient 1</div>
-                      </p>
-                    </div>
+                <div class="my-3">
+                  <label for="volumeHoraireTd" class="form-label">
+                    TD
+                  </label>
+                  <div class="input-group">
+                    <input
+                      name="volumeHoraireTdHeures"
+                      type="number"
+                      class="form-control"
+                      placeholder="Heures"
+                      aria-label="TD : heures"
+                      min="0"
+                    ></input>
+                    <span class="input-group-text">h</span>
+                    <input
+                      name="volumeHoraireTdMinutes"
+                      type="number"
+                      class="form-control"
+                      placeholder="Minutes"
+                      aria-label="TD : minutes"
+                      step="15"
+                      min="0"
+                      max="45"
+                    ></input>
                   </div>
                 </div>
+                <div class="my-3">
+                  <label for="volumeHoraireTp" class="form-label">
+                    TP
+                  </label>
+                  <div class="input-group">
+                    <input
+                      name="volumeHoraireTpHeures"
+                      type="number"
+                      class="form-control"
+                      placeholder="Heures"
+                      aria-label="TP : heures"
+                      min="0"
+                    ></input>
+                    <span class="input-group-text">h</span>
+                    <input
+                      name="volumeHoraireTpMinutes"
+                      type="number"
+                      class="form-control"
+                      placeholder="Minutes"
+                      aria-label="TP : minutes"
+                      step="15"
+                      min="0"
+                      max="45"
+                    ></input>
+                  </div>
+                </div>
+              </fieldset>
 
-                <div class="col d-flex flex-column card">
-                  <h4>Oral</h4>
-                  <i class="fs-1 bi bi-award"></i>
-                  <div>1h</div>
-                  <div>Coefficient 1</div>
-                </div>
-                <div class="col d-flex flex-column card">
-                  <h4>Pratique</h4>
-                  <i class="fs-1 bi bi-award"></i>
-                  <div>5h</div>
-                  <div>Coefficient 4</div>
-                </div>
-              </div>
-            </div>
+              <fieldset class="my-3">
+                <legend>Professeurs</legend>
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <select name="professeur" class="form-control">
+                          <option selected>Mme Dupont</option>
+                          <option>M. Crush</option>
+                        </select>
+                      </td>
+                      <td>
+                        <select name="professeurType" class="form-control">
+                          <option selected>Cours</option>
+                          <option>TD</option>
+                          <option>TP</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <select name="professeur" class="form-control">
+                          <option>Mme Dupont</option>
+                          <option selected>M. Crush</option>
+                        </select>
+                      </td>
+                      <td>
+                        <select name="professeurType" class="form-control">
+                          <option>Cours</option>
+                          <option>TD</option>
+                          <option selected>TP</option>
+                        </select>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </fieldset>
+
+              <fieldset class="my-3">
+                <legend>Examens</legend>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Type</th>
+                      <th scope="col">Coefficient</th>
+                      <th scope="col">Durée</th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <select name="typeExamen" class="form-control">
+                          <option selected>Ecrit</option>
+                          <option>Oral</option>
+                          <option>Pratique</option>
+                        </select>
+                      </td>
+                      <td>
+                        <input
+                          name="coefficientExamen"
+                          type="number"
+                          min="0"
+                          class="form-control"
+                          value="3"
+                        ></input>
+                      </td>
+                      <td>
+                        <input
+                          name="duréeExamen"
+                          type="number"
+                          min="0"
+                          class="form-control"
+                          value="2"
+                        ></input>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <select name="typeExamen" class="form-control">
+                          <option>Ecrit</option>
+                          <option selected>Oral</option>
+                          <option>Pratique</option>
+                        </select>
+                      </td>
+                      <td>
+                        <input
+                          name="coefficientExamen"
+                          type="number"
+                          min="0"
+                          class="form-control"
+                          value="1"
+                        ></input>
+                      </td>
+                      <td>
+                        <input
+                          name="duréeExamen"
+                          type="number"
+                          min="0"
+                          class="form-control"
+                          value="1"
+                        ></input>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </fieldset>
+
+              <fieldset class="my-3">
+                <legend>ECTS</legend>
+                <label for="nombreCréditEcts" class="form-label">
+                  Nombre de crédits
+                </label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="nombreCréditEcts"
+                  min="0"
+                />
+              </fieldset>
+              <button type="submit" class="btn btn-primary">
+                Valider
+              </button>
+            </form>
           </div>
         </div>
       </div>

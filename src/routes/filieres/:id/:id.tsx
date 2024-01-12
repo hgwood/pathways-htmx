@@ -5,6 +5,7 @@ import type { RouteHandler } from "../../../utils/route";
 import { html, notFound } from "../../../utils/httpResponse";
 import { Page } from "../../../components/Page";
 import { SemestreTab } from "../../../components/SemestreTab";
+import { Table } from "../../../components/Table";
 
 export const get: RouteHandler = async (req, res, { params }) => {
   if (!params?.id) {
@@ -50,6 +51,13 @@ export const get: RouteHandler = async (req, res, { params }) => {
   if (!filière) {
     return notFound(res);
   }
+  const professeurs = [{ nom: "Mme Dupont" }, { nom: "M. Crush" }];
+  const typeCours = [{ label: "Cours" }, { label: "TD" }, { label: "TP" }];
+  const typeExamen = [
+    { label: "Ecrit" },
+    { label: "Oral" },
+    { label: "Pratique" },
+  ];
   return html(
     res,
     <Page>
@@ -156,116 +164,126 @@ export const get: RouteHandler = async (req, res, { params }) => {
 
               <fieldset class="my-3">
                 <legend>Professeurs</legend>
-                <table class="table">
-                  <tbody>
-                    <tr>
-                      <td>
-                        <select name="professeur" class="form-control">
-                          <option selected>Mme Dupont</option>
-                          <option>M. Crush</option>
-                        </select>
-                      </td>
-                      <td>
-                        <select name="professeurType" class="form-control">
-                          <option selected>Cours</option>
-                          <option>TD</option>
-                          <option>TP</option>
-                        </select>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <select name="professeur" class="form-control">
-                          <option>Mme Dupont</option>
-                          <option selected>M. Crush</option>
-                        </select>
-                      </td>
-                      <td>
-                        <select name="professeurType" class="form-control">
-                          <option>Cours</option>
-                          <option>TD</option>
-                          <option selected>TP</option>
-                        </select>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <div class="my-3">
+                  <Table
+                    columns={[
+                      {
+                        title: "Nom",
+                        render(item) {
+                          return (
+                            <select name="professeur" class="form-control">
+                              {professeurs.map(({ nom }) => (
+                                <option selected={nom === item.nom} safe>
+                                  {nom}
+                                </option>
+                              ))}
+                            </select>
+                          );
+                        },
+                      },
+                      {
+                        title: "Attribution",
+                        render(item) {
+                          return (
+                            <select name="professeurType" class="form-control">
+                              {typeCours.map(({ label }) => (
+                                <option
+                                  selected={label === item.attribution}
+                                  safe
+                                >
+                                  {label}
+                                </option>
+                              ))}
+                            </select>
+                          );
+                        },
+                      },
+                    ]}
+                    dataSource={[
+                      { nom: "Mme Dupont", attribution: "TD" },
+                      { nom: "M. Crush", attribution: "TP" },
+                    ]}
+                  />
+                  <button type="button" class="btn btn-secondary btn-small">
+                    Ajouter un professeur
+                  </button>
+                </div>
               </fieldset>
 
               <fieldset class="my-3">
                 <legend>Examens</legend>
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Type</th>
-                      <th scope="col">Coefficient</th>
-                      <th scope="col">Durée</th>
-                      <th scope="col"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <select name="typeExamen" class="form-control">
-                          <option selected>Ecrit</option>
-                          <option>Oral</option>
-                          <option>Pratique</option>
-                        </select>
-                      </td>
-                      <td>
-                        <input
-                          name="coefficientExamen"
-                          type="number"
-                          min="0"
-                          class="form-control"
-                          value="3"
-                        ></input>
-                      </td>
-                      <td>
-                        <input
-                          name="duréeExamen"
-                          type="number"
-                          min="0"
-                          class="form-control"
-                          value="2"
-                        ></input>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <select name="typeExamen" class="form-control">
-                          <option>Ecrit</option>
-                          <option selected>Oral</option>
-                          <option>Pratique</option>
-                        </select>
-                      </td>
-                      <td>
-                        <input
-                          name="coefficientExamen"
-                          type="number"
-                          min="0"
-                          class="form-control"
-                          value="1"
-                        ></input>
-                      </td>
-                      <td>
-                        <input
-                          name="duréeExamen"
-                          type="number"
-                          min="0"
-                          class="form-control"
-                          value="1"
-                        ></input>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </fieldset>
 
-              <fieldset class="my-3">
-                <legend>ECTS</legend>
+                <div class="form-check form-switch my-3">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    id="bonus"
+                  />
+                  <label class="form-check-label" for="bonus">
+                    Bonus
+                  </label>
+                </div>
+
+                <div class="my-3">
+                  <Table
+                    columns={[
+                      {
+                        title: "Type",
+                        render(item) {
+                          return (
+                            <select name="typeExamen" class="form-control">
+                              {typeExamen.map(({ label }) => (
+                                <option selected={label === item.type} safe>
+                                  {label}
+                                </option>
+                              ))}
+                            </select>
+                          );
+                        },
+                      },
+                      {
+                        title: "Coefficient",
+                        render(item) {
+                          return (
+                            <input
+                              name="coefficientExamen"
+                              type="number"
+                              min="0"
+                              class="form-control"
+                              value={item.coefficient.toString()}
+                            />
+                          );
+                        },
+                      },
+                      {
+                        title: "Durée",
+                        render(item) {
+                          return (
+                            <input
+                              name="duréeExamen"
+                              type="number"
+                              min="0"
+                              class="form-control"
+                              value={item.durée.toString()}
+                            />
+                          );
+                        },
+                      },
+                      { title: "" },
+                    ]}
+                    dataSource={[
+                      { type: "Ecrit", coefficient: 3, durée: 2 },
+                      { type: "Oral", coefficient: 2, durée: 1 },
+                    ]}
+                  />
+                  <button type="button" class="btn btn-secondary btn-small">
+                    Ajouter un examen
+                  </button>
+                </div>
+
                 <label for="nombreCréditEcts" class="form-label">
-                  Nombre de crédits
+                  Nombre de crédits ECTS
                 </label>
                 <input
                   type="number"
@@ -274,6 +292,7 @@ export const get: RouteHandler = async (req, res, { params }) => {
                   min="0"
                 />
               </fieldset>
+
               <button type="submit" class="btn btn-primary">
                 Valider
               </button>

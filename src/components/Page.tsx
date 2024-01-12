@@ -1,7 +1,9 @@
 import { Html } from "@kitajs/html";
 import type { Component } from "@kitajs/html";
 
-export const Page: Component<{ title?: string }> = ({ title, children }) => {
+export const Page: Component<
+  { title?: string } & JSX.IntrinsicElements["body"]
+> = ({ title, children, ...props }) => {
   return (
     <>
       {"<!doctype html>"}
@@ -30,7 +32,7 @@ export const Page: Component<{ title?: string }> = ({ title, children }) => {
           ></link>
           <link rel="stylesheet" href="/assets/style.css"></link>
         </head>
-        <body>
+        <body {...props}>
           <div class="container">{children}</div>
         </body>
       </html>

@@ -85,84 +85,51 @@ export const get: RouteHandler = async (req, res, { params }) => {
               <form action="submit" method="POST">
                 <fieldset class="my-3">
                   <legend>Volume horaire</legend>
-                  <div class="my-3">
-                    <label for="volumeHoraireCours" class="form-label">
-                      Cours
-                    </label>
-                    <div class="input-group">
-                      <input
-                        name="volumeHoraireCoursHeures"
-                        type="number"
-                        class="form-control"
-                        placeholder="Heures"
-                        aria-label="Cours : heures"
-                        min="0"
-                      ></input>
-                      <span class="input-group-text">h</span>
-                      <input
-                        name="volumeHoraireCoursMinutes"
-                        type="number"
-                        class="form-control"
-                        placeholder="Minutes"
-                        aria-label="Cours : minutes"
-                        step="15"
-                        min="0"
-                        max="45"
-                      ></input>
-                    </div>
-                  </div>
-                  <div class="my-3">
-                    <label for="volumeHoraireTd" class="form-label">
-                      TD
-                    </label>
-                    <div class="input-group">
-                      <input
-                        name="volumeHoraireTdHeures"
-                        type="number"
-                        class="form-control"
-                        placeholder="Heures"
-                        aria-label="TD : heures"
-                        min="0"
-                      ></input>
-                      <span class="input-group-text">h</span>
-                      <input
-                        name="volumeHoraireTdMinutes"
-                        type="number"
-                        class="form-control"
-                        placeholder="Minutes"
-                        aria-label="TD : minutes"
-                        step="15"
-                        min="0"
-                        max="45"
-                      ></input>
-                    </div>
-                  </div>
-                  <div class="my-3">
-                    <label for="volumeHoraireTp" class="form-label">
-                      TP
-                    </label>
-                    <div class="input-group">
-                      <input
-                        name="volumeHoraireTpHeures"
-                        type="number"
-                        class="form-control"
-                        placeholder="Heures"
-                        aria-label="TP : heures"
-                        min="0"
-                      ></input>
-                      <span class="input-group-text">h</span>
-                      <input
-                        name="volumeHoraireTpMinutes"
-                        type="number"
-                        class="form-control"
-                        placeholder="Minutes"
-                        aria-label="TP : minutes"
-                        step="15"
-                        min="0"
-                        max="45"
-                      ></input>
-                    </div>
-                  </div>
+                  <Table
+                    columns={[
+                      {
+                        title: "Modalité",
+                        render({ modalité }) {
+                          return modalité;
+                        },
+                      },
+                      {
+                        title: "Volume",
+                        render({ heures, minutes }) {
+                          return (
+                            <div class="input-group">
+                              <input
+                                name="volumeHoraireCoursHeures"
+                                type="number"
+                                class="form-control"
+                                placeholder="Heures"
+                                aria-label="Cours : heures"
+                                min="0"
+                                value={heures.toString()}
+                              ></input>
+                              <span class="input-group-text">h</span>
+                              <input
+                                name="volumeHoraireCoursMinutes"
+                                type="number"
+                                class="form-control"
+                                placeholder="Minutes"
+                                aria-label="Cours : minutes"
+                                step="15"
+                                min="0"
+                                max="45"
+                                value={minutes.toString()}
+                              ></input>
+                            </div>
+                          );
+                        },
+                      },
+                    ]}
+                    dataSource={[
+                      { modalité: "Cours", heures: 22, minutes: 0 },
+                      { modalité: "TD", heures: 0, minutes: 0 },
+                      { modalité: "TP", heures: 6, minutes: 30 },
+                    ]}
+                  />
                 </fieldset>
 
                 <fieldset class="my-3">
@@ -185,7 +152,7 @@ export const get: RouteHandler = async (req, res, { params }) => {
                           },
                         },
                         {
-                          title: "Attribution",
+                          title: "Modalité",
                           render(item) {
                             return (
                               <select
@@ -194,7 +161,7 @@ export const get: RouteHandler = async (req, res, { params }) => {
                               >
                                 {typeCours.map(({ label }) => (
                                   <option
-                                    selected={label === item.attribution}
+                                    selected={label === item.modalité}
                                     safe
                                   >
                                     {label}
@@ -206,8 +173,8 @@ export const get: RouteHandler = async (req, res, { params }) => {
                         },
                       ]}
                       dataSource={[
-                        { nom: "Mme Dupont", attribution: "TD" },
-                        { nom: "M. Crush", attribution: "TP" },
+                        { nom: "Mme Dupont", modalité: "TD" },
+                        { nom: "M. Crush", modalité: "TP" },
                       ]}
                     />
                     <button type="button" class="btn btn-secondary btn-small">

@@ -73,7 +73,7 @@ export const $ec = sqliteTable(
   })
 );
 
-export const $ecRelations = relations($ec, ({ one }) => ({
+export const $ecRelations = relations($ec, ({ one, many }) => ({
   ue: one($ue, {
     fields: [$ec.idUe],
     references: [$ue.id],
@@ -82,9 +82,29 @@ export const $ecRelations = relations($ec, ({ one }) => ({
     fields: [$ec.idMatière],
     references: [$matières.id],
   }),
+  volumeHoraire: many($volumesHoraire),
 }));
 
-export const $matières = sqliteTable("matières", {
+export const $matières = sqliteTable("matière", {
   id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
   nom: text("nom").notNull(),
 });
+
+export const $volumesHoraire = sqliteTable("volume_horaire", {
+  idEc: integer("id_ec", { mode: "number" })
+    .notNull()
+    .references(() => $ec.id),
+  modalité: text("modalité").notNull(),
+  heures: integer("heures", { mode: "number" }).notNull(),
+  minutes: integer("minutes", { mode: "number" }).notNull(),
+});
+
+export const $volumesHoraireRelations = relations(
+  $volumesHoraire,
+  ({ one }) => ({
+    ec: one($ec, {
+      fields: [$volumesHoraire.idEc],
+      references: [$ec.id],
+    }),
+  })
+);

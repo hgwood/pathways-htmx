@@ -5,10 +5,11 @@ import type { Semestre } from "../db/types";
 export type SemestreTabProps = {
   semestre: Semestre<{
     numéro: true;
+    idFilière: true;
     ue: {
       nom: true;
       numéro: true;
-      ec: { numéro: true; matière: { nom: true } };
+      ec: { id: true; numéro: true; matière: { nom: true } };
     };
   }>;
 } & JSX.IntrinsicElements["ul"];
@@ -28,7 +29,9 @@ export const SemestreTab: Component<SemestreTabProps> = ({
           <ul>
             {ue.ec.map((ec) => (
               <li>
-                <span safe>{ec.matière.nom}</span>
+                <a href="#" hx-get={`${semestre.idFilière}/ec/${ec.id}`} safe>
+                  {ec.matière.nom}
+                </a>
               </li>
             ))}
           </ul>

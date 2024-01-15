@@ -8,7 +8,7 @@ import { SemestreTab } from "../../../components/SemestreTab";
 import { EcForm } from "../../../components/EcForm";
 
 export const get: RouteHandler = async (req, res, { params }) => {
-  if (!params?.id) {
+  if (!params?.idFilière) {
     return notFound(res);
   }
   const filière = await db().query.$filières.findFirst({
@@ -16,7 +16,7 @@ export const get: RouteHandler = async (req, res, { params }) => {
       nomInterne: true,
       nomOfficiel: true,
     },
-    where: eq($filières.id, params.id),
+    where: eq($filières.id, params.idFilière),
     with: {
       semestres: {
         columns: {
@@ -41,7 +41,7 @@ export const get: RouteHandler = async (req, res, { params }) => {
                       nom: true,
                     },
                   },
-                  volumeHoraire: {
+                  volumesHoraire: {
                     columns: {
                       heures: true,
                       minutes: true,
@@ -82,9 +82,7 @@ export const get: RouteHandler = async (req, res, { params }) => {
             </div>
           </div>
           <div class="col">
-            <div class="card p-4">
-              <EcForm />
-            </div>
+            <div class="card p-4" id="ecForm"></div>
           </div>
         </div>
       </div>

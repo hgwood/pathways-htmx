@@ -1,4 +1,10 @@
-import type { $ec, $matières, $semestres, $ue } from "./schema";
+import type {
+  $ec,
+  $matières,
+  $semestres,
+  $ue,
+  $volumesHoraire,
+} from "./schema";
 
 export type Semestre<KS extends KeySelect<Ue> | AllFields = AllFields> =
   Selectable<
@@ -20,9 +26,14 @@ export type Ec<KS extends KeySelect<Ec> | AllFields = AllFields> = Selectable<
   typeof $ec.$inferSelect & {
     ue: Ue;
     matière: Matière;
+    volumesHoraire: VolumeHoraire[];
   },
   KS
 >;
+
+export type VolumeHoraire<
+  KS extends KeySelect<VolumeHoraire> | AllFields = AllFields
+> = Selectable<typeof $volumesHoraire.$inferSelect, KS>;
 
 export type Matière<KS extends KeySelect<Ec> | AllFields = AllFields> =
   Selectable<typeof $matières.$inferSelect, KS>;

@@ -29,7 +29,7 @@ export const SemestreTab: Component<SemestreTabProps> = ({
           <ul>
             {ue.ec.map((ec) => (
               <li>
-                <a href="#" hx-get={`${semestre.idFilière}/ec/${ec.id}`} safe>
+                <a href="#" hx-get={`${semestre.idFilière}/ec/${ec.id}`} hx-target="#ecForm" safe>
                   {ec.matière.nom}
                 </a>
               </li>

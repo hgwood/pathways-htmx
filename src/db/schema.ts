@@ -82,7 +82,7 @@ export const $ecRelations = relations($ec, ({ one, many }) => ({
     fields: [$ec.idMatière],
     references: [$matières.id],
   }),
-  volumeHoraire: many($volumesHoraire),
+  volumesHoraire: many($volumesHoraire),
 }));
 
 export const $matières = sqliteTable("matière", {

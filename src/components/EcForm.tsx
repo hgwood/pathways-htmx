@@ -1,7 +1,15 @@
 import { Html } from "@kitajs/html";
 import { Table } from "./Table";
+import type { Ec } from "../db/types";
 
-export function EcForm() {
+export function EcForm({
+  ec,
+}: {
+  ec: Ec<{
+    numéro: true;
+    volumesHoraire: { modalité: true; heures: true; minutes: true };
+  }>;
+}) {
   const professeurs = [{ nom: "Mme Dupont" }, { nom: "M. Crush" }];
   const typeCours = [{ label: "Cours" }, { label: "TD" }, { label: "TP" }];
   const typeExamen = [
@@ -52,11 +60,7 @@ export function EcForm() {
               },
             },
           ]}
-          dataSource={[
-            { modalité: "Cours", heures: 22, minutes: 0 },
-            { modalité: "TD", heures: 0, minutes: 0 },
-            { modalité: "TP", heures: 6, minutes: 30 },
-          ]}
+          dataSource={ec.volumesHoraire}
         />
       </fieldset>
 

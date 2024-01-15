@@ -7,16 +7,16 @@ import { $ec } from "../../../../db/schema";
 import { db } from "../../../../db/db";
 
 export const get: RouteHandler = async (req, res, { params }) => {
-  if (!params?.id) {
+  if (!params?.idFilière || !params?.idEc) {
     return notFound(res);
   }
   const ec = await db().query.$ec.findFirst({
     columns: {
       numéro: true,
     },
-    where: eq($ec.id, params.id),
+    where: eq($ec.id, params.idEc),
     with: {
-      volumeHoraire: {
+      volumesHoraire: {
         columns: {
           modalité: true,
           heures: true,
@@ -25,5 +25,8 @@ export const get: RouteHandler = async (req, res, { params }) => {
       },
     },
   });
+  if (!ec) {
+    return notFound(res);
+  }
   return html(res, <EcForm ec={ec} />);
 };

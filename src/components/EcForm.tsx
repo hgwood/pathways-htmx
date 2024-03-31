@@ -1,6 +1,7 @@
 import { Html } from "@kitajs/html";
 import { Table } from "./Table";
 import type { Ec } from "../db/types";
+import { AddProfessorModal } from "./AddProfessorModal";
 
 export function EcForm({
   ec,
@@ -103,7 +104,12 @@ export function EcForm({
               { nom: "M. Crush", modalité: "TP" },
             ]}
           />
-          <button type="button" class="btn btn-secondary btn-small">
+          <button
+            type="button"
+            class="btn btn-secondary btn-small"
+            data-bs-toggle="modal"
+            data-bs-target="#add-professor-modal"
+          >
             Ajouter un professeur
           </button>
         </div>
@@ -195,6 +201,7 @@ export function EcForm({
       <button type="submit" class="btn btn-primary">
         Valider
       </button>
+      <AddProfessorModal />
     </form>
   );
 }

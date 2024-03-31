@@ -5,37 +5,36 @@ export function AddProfessorModal() {
     <div
       class="modal"
       tabindex="-1"
-      aria-labelledby="exampleModalLabel"
       aria-hidden="true"
       id="add-professor-modal"
     >
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">
-              Modal title
-            </h5>
+          <div class="modal-header input-group">
+            <span class="input-group-text">
+              <i class="bi bi-search"></i>
+            </span>
+            <input
+              name="termeRechercheProfesseur"
+              type="search"
+              class="form-control"
+              placeholder="Rechercher un professeur"
+              hx-get="rechercheProfesseur"
+              hx-target="#add-professor-modal-search-results"
+              hx-trigger="input changed delay:100ms, search"
+              hx-indicator=".htmx-indicator"
+            />
             <button
               type="button"
-              class="btn-close"
+              class="btn btn-outline-secondary"
               data-bs-dismiss="modal"
               aria-label="Close"
-            ></button>
+            >
+              <i class="bi bi-x-lg"></i>
+            </button>
           </div>
           <div class="modal-body">
-            <p>Modal body text goes here.</p>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-primary">
-              Save changes
-            </button>
+            <ul id="add-professor-modal-search-results"></ul>
           </div>
         </div>
       </div>

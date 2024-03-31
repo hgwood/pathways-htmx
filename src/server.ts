@@ -34,7 +34,7 @@ const server = http.createServer(async (req, res) => {
   if (!routeFunction) {
     return methodNotAllowed(res);
   }
-  routeFunction(req, res, routeMatch);
+  routeFunction(req, res, routeMatch, url);
 });
 
 server.listen(4500, () => {

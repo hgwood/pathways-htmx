@@ -13,6 +13,7 @@ export const get: RouteHandler = async (req, res, { params }) => {
   }
   const filière = await db().query.$filières.findFirst({
     columns: {
+      id: true,
       nomInterne: true,
       nomOfficiel: true,
     },
@@ -71,7 +72,22 @@ export const get: RouteHandler = async (req, res, { params }) => {
         <div class="row gx-4">
           <div class="col">
             <div class="card p-4">
-              <ul>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="bi bi-search"></i>
+                </span>
+                <input
+                  name="termeRechercheFilière"
+                  type="search"
+                  class="form-control"
+                  hx-post={`${filière.id}/recherche`}
+                  hx-trigger="input changed delay:100ms, search"
+                  hx-target="#arbre-filière"
+                  hx-swap="outerHTML"
+                  hx-indicator=".htmx-indicator"
+                />
+              </div>
+              <ul id="arbre-filière">
                 {filière.semestres.map((semestre) => (
                   <li>
                     <h2>Semestre {semestre.numéro}</h2>

@@ -12,20 +12,57 @@ export const get: RouteHandler = async (req, res, match, url) => {
   return html(
     res,
     <>
-      {searchResults.map(({ name }) => (
-        <button
-          type="button"
-          class="list-group-item list-group-item-action"
-          safe
-        >
-          {name}
-        </button>
+      {searchResults.map(({ name }, index) => (
+        // <button
+        //   type="button"
+        //   class="list-group-item list-group-item-action"
+        //   data-bs-dismiss="modal"
+        //   safe
+        // >
+        //   {name}
+        // </button>
+        <li class="list-group-item list-group-item-action">
+          <input
+            class="form-check-input d-none"
+            type="radio"
+            name="selectedProfessor"
+            value={name}
+            id={`professorSearchResult${index}`}
+            hx-post="ajoutProfesseur"
+            hx-target="#professeurs-table > tbody"
+            hx-swap="beforeend"
+            data-bs-dismiss="modal"
+          />
+          <label
+            class="form-check-label stretched-link"
+            for={`professorSearchResult${index}`}
+            safe
+          >
+            {name}
+          </label>
+        </li>
       ))}
     </>
   );
 };
 
-const professors = [
+/*
+<ul class="list-group">
+  <li class="list-group-item">
+    <input class="form-check-input me-1" type="radio" name="listGroupRadio" value="" id="firstRadio" checked>
+    <label class="form-check-label" for="firstRadio">First radio</label>
+  </li>
+  <li class="list-group-item">
+    <input class="form-check-input me-1" type="radio" name="listGroupRadio" value="" id="secondRadio">
+    <label class="form-check-label" for="secondRadio">Second radio</label>
+  </li>
+  <li class="list-group-item">
+    <input class="form-check-input me-1" type="radio" name="listGroupRadio" value="" id="thirdRadio">
+    <label class="form-check-label" for="thirdRadio">Third radio</label>
+  </li>
+</ul>*/
+
+export const professors = [
   { firstName: "Pierre", lastName: "Dupont" },
   { firstName: "Juliette", lastName: "Lefevre" },
   { firstName: "Arnaud", lastName: "Mercier" },

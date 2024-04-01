@@ -1,4 +1,4 @@
-import { Html } from "@kitajs/html";
+import { Html, type Component } from "@kitajs/html";
 
 export interface Column<T> {
   title?: string;
@@ -8,30 +8,26 @@ export interface Column<T> {
 export function Table<T>({
   dataSource,
   columns,
+  id,
 }: {
   dataSource: T[];
-  columns?: Column<T>[];
+  columns: Column<T>[];
+  id: string;
 }) {
   return (
-    <table class="table">
-      {!!columns && (
-        <thead>
-          <tr>
-            {columns.map(({ title }) => (
-              <th scope="col" safe>
-                {title}
-              </th>
-            ))}
-          </tr>
-        </thead>
-      )}
-      <tbody>
+    <table class="table" id={id}>
+      <thead>
+        <tr>
+          {columns.map(({ title }) => (
+            <th scope="col" safe>
+              {title}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody class="align-baseline">
         {dataSource.map((item) => (
-          <tr>
-            {columns?.map(({ render }) => (
-              <td>{render?.(item)}</td>
-            ))}
-          </tr>
+          <TableRow item={item} columns={columns} />
         ))}
         {/* <tr>
           <td>
@@ -89,5 +85,21 @@ export function Table<T>({
         </tr> */}
       </tbody>
     </table>
+  );
+}
+
+export function TableRow<T>({
+  item,
+  columns,
+}: {
+  item: T;
+  columns: Column<T>[];
+}) {
+  return (
+    <tr>
+      {columns?.map(({ render }) => (
+        <td>{render?.(item)}</td>
+      ))}
+    </tr>
   );
 }

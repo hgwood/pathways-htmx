@@ -22,7 +22,6 @@ export function AddProfessorModal() {
               hx-get="rechercheProfesseur"
               hx-target="#add-professor-modal-search-results"
               hx-trigger="input changed delay:100ms, search"
-              hx-indicator=".htmx-indicator"
             />
             <button
               type="button"
@@ -34,10 +33,12 @@ export function AddProfessorModal() {
             </button>
           </div>
           <div class="modal-body">
-            <div
-              id="add-professor-modal-search-results"
-              class="list-group"
-            ></div>
+            <form>
+              <ul
+                id="add-professor-modal-search-results"
+                class="list-group"
+              ></ul>
+            </form>
           </div>
         </div>
       </div>

@@ -3,7 +3,6 @@ import { Table, type Column } from "./Table";
 import type { Ec } from "../db/types";
 import { AddProfessorModal } from "./AddProfessorModal";
 
-const professeurs = [{ nom: "Mme Dupont" }, { nom: "M. Crush" }];
 const typeCours = [{ label: "Cours" }, { label: "TD" }, { label: "TP" }];
 
 export function EcForm({
@@ -194,13 +193,6 @@ export const professeursTableColumns = [
     title: "Nom",
     render(item) {
       return (
-        // <select name="professeur" class="form-control">
-        //   {professeurs.map(({ nom }) => (
-        //     <option selected={nom === item.nom} safe>
-        //       {nom}
-        //     </option>
-        //   ))}
-        // </select>
         <>
           <span safe>{item.nom}</span>
           <input type="hidden" value={item.nom} />

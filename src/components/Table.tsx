@@ -1,4 +1,4 @@
-import { Html, type Component } from "@kitajs/html";
+import { Html } from "@kitajs/html";
 
 export interface Column<T> {
   title?: string;
@@ -29,60 +29,6 @@ export function Table<T>({
         {dataSource.map((item) => (
           <TableRow item={item} columns={columns} />
         ))}
-        {/* <tr>
-          <td>
-            <select name="typeExamen" class="form-control">
-              <option selected>Ecrit</option>
-              <option>Oral</option>
-              <option>Pratique</option>
-            </select>
-          </td>
-          <td>
-            <input
-              name="coefficientExamen"
-              type="number"
-              min="0"
-              class="form-control"
-              value="3"
-            ></input>
-          </td>
-          <td>
-            <input
-              name="duréeExamen"
-              type="number"
-              min="0"
-              class="form-control"
-              value="2"
-            ></input>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <select name="typeExamen" class="form-control">
-              <option>Ecrit</option>
-              <option selected>Oral</option>
-              <option>Pratique</option>
-            </select>
-          </td>
-          <td>
-            <input
-              name="coefficientExamen"
-              type="number"
-              min="0"
-              class="form-control"
-              value="1"
-            ></input>
-          </td>
-          <td>
-            <input
-              name="duréeExamen"
-              type="number"
-              min="0"
-              class="form-control"
-              value="1"
-            ></input>
-          </td>
-        </tr> */}
       </tbody>
     </table>
   );
@@ -97,8 +43,8 @@ export function TableRow<T>({
 }) {
   return (
     <tr>
-      {columns?.map(({ render }) => (
-        <td>{render?.(item)}</td>
+      {columns?.map(({ render: safeRender }) => (
+        <td>{safeRender?.(item)}</td>
       ))}
     </tr>
   );

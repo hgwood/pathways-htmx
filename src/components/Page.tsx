@@ -1,9 +1,9 @@
 import { Html } from "@kitajs/html";
 import type { Component } from "@kitajs/html";
 
-export const Page: Component<
-  { title?: string } & JSX.IntrinsicElements["body"]
-> = ({ title, children, ...props }) => {
+export const Page: Component<{
+  title?: string;
+}> = ({ title, children: safeChildren, ...props }) => {
   return (
     <>
       {"<!doctype html>"}
@@ -38,7 +38,7 @@ export const Page: Component<
           ></script>
         </head>
         <body {...props}>
-          <div class="container">{children}</div>
+          <div class="container">{safeChildren}</div>
         </body>
       </html>
     </>

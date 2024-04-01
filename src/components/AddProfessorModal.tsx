@@ -34,7 +34,10 @@ export function AddProfessorModal() {
             </button>
           </div>
           <div class="modal-body">
-            <ul id="add-professor-modal-search-results"></ul>
+            <div
+              id="add-professor-modal-search-results"
+              class="list-group"
+            ></div>
           </div>
         </div>
       </div>

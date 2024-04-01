@@ -4,6 +4,7 @@ import { Html } from "@kitajs/html";
 import type { RouteHandler } from "../../utils/route";
 import { html, notFound } from "../../utils/httpResponse";
 import { SemestreTab } from "../../components/SemestreTab";
+import classNames from "classnames";
 
 export const get: RouteHandler = async (req, res, match, url) => {
   const termeRecherche = url?.searchParams.get("termeRechercheProfesseur");
@@ -15,8 +16,17 @@ export const get: RouteHandler = async (req, res, match, url) => {
   return html(
     res,
     <>
-      {searchResults.map(({ name }) => (
-        <li safe>{name}</li>
+      {searchResults.map(({ name }, index) => (
+        <button
+          type="button"
+          class={classNames("list-group-item list-group-item-action", {
+            active: index === 0,
+          })}
+          aria-current={index === 0}
+          safe
+        >
+          {name}
+        </button>
       ))}
     </>
   );

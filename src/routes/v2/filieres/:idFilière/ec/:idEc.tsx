@@ -4,10 +4,10 @@ import { db, $filières, $ec } from "../../../../../db/db";
 import type { RouteHandler } from "../../../../../utils/route";
 import { html, notFound } from "../../../../../utils/httpResponse";
 import { Page } from "../../../../../components/Page";
-import { ArbreMaquette } from "../../../../../components/ArbreMaquette";
 import { EcForm } from "../../../../../components/EcForm";
+import { CarteArbreMaquette } from "../../../../../components/CarteArbreMaquette";
 
-export const get: RouteHandler = async (req, res, { params }) => {
+export const get: RouteHandler = async (req, res, { params }, url) => {
   if (!params?.idFilière) {
     return notFound(res);
   }
@@ -56,7 +56,6 @@ export const get: RouteHandler = async (req, res, { params }) => {
   if (!filière) {
     return notFound(res);
   }
-  console.log(JSON.stringify(filière))
 
   if (!params?.idEc) {
     return notFound(res);
@@ -84,6 +83,8 @@ export const get: RouteHandler = async (req, res, { params }) => {
     return notFound(res);
   }
 
+  const recherche = url?.searchParams.get("recherche") ?? "";
+
   return html(
     res,
     <Page>
@@ -95,31 +96,7 @@ export const get: RouteHandler = async (req, res, { params }) => {
       <div class="container">
         <div class="row gx-4">
           <div class="col">
-            <div class="card p-4">
-              <div class="input-group">
-                <span class="input-group-text">
-                  <i class="bi bi-search"></i>
-                </span>
-                <input
-                  name="termeRechercheFilière"
-                  type="search"
-                  class="form-control"
-                  hx-post={`${filière.id}/recherche`}
-                  hx-trigger="input changed delay:100ms, search"
-                  hx-target="#arbre-filière"
-                  hx-swap="outerHTML"
-                  hx-indicator=".htmx-indicator"
-                />
-              </div>
-              <ul id="arbre-filière">
-                {filière.semestres.map((semestre) => (
-                  <li>
-                    <h2>Semestre {semestre.numéro}</h2>
-                    <ArbreMaquette semestre={semestre} />
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <CarteArbreMaquette filière={filière} recherche={recherche} />
           </div>
           <div class="col">
             <div class="card p-4">

@@ -6,7 +6,7 @@ import type {
   $volumesHoraire,
 } from "./schema";
 
-export type Semestre<KS extends KeySelect<Ue> | AllFields = AllFields> =
+export type Semestre<KS extends KeySelect<Semestre> | AllFields = AllFields> =
   Selectable<
     typeof $semestres.$inferSelect & {
       ue: Ue[];

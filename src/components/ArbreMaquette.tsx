@@ -12,12 +12,23 @@ export type ArbreMaquette = {
       ec: { id: true; numéro: true; matière: { nom: true } };
     };
   }>;
+  recherche?: string;
 } & JSX.IntrinsicElements["ul"];
 
 export const ArbreMaquette: Component<ArbreMaquette> = ({
   semestre,
+  recherche,
   ...props
 }) => {
+  if (recherche) {
+    for (const ue of semestre.ue) {
+      ue.ec = ue.ec.filter((ec) =>
+        ec.matière.nom.toLocaleLowerCase().includes(recherche.toLowerCase())
+      );
+    }
+    semestre.ue = semestre.ue.filter((ue) => ue.ec.length > 0);
+  }
+
   return (
     <ul {...props}>
       {semestre.ue.map((ue) => (
@@ -29,7 +40,9 @@ export const ArbreMaquette: Component<ArbreMaquette> = ({
           <ul>
             {ue.ec.map((ec) => (
               <li>
-                <a href={`${semestre.idFilière}/ec/${ec.id}`}>
+                <a
+                  href={`/v2/filieres/${semestre.idFilière}/ec/${ec.id}?recherche=${recherche}`}
+                >
                   {ec.matière.nom}
                 </a>
               </li>

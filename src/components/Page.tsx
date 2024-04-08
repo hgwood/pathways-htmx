@@ -38,7 +38,7 @@ export const Page: Component<{
           ></script>
         </head>
         <body {...props}>
-          <div class="container">{safeChildren}</div>
+          <div class="container-fluid">{safeChildren}</div>
         </body>
       </html>
     </>

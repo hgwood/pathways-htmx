@@ -5,7 +5,7 @@ import type { RouteHandler } from "../../../../../../utils/route";
 import { html, notFound, redirect } from "../../../../../../utils/httpResponse";
 import { Page } from "../../../../../../components/Page";
 import { EcForm } from "../../../../../../components/EcForm2";
-// import { CarteArbreMaquette } from "../../../../../../components/CarteArbreMaquette";
+import { CarteArbreMaquette } from "../../../../../../components/CarteArbreMaquette";
 import { CarteAjoutProfesseur } from "../../../../../../components/CarteAjoutProfesseur";
 
 export const get: RouteHandler = async (req, res, { params }, url) => {
@@ -93,7 +93,7 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
     return notFound(res);
   }
 
-  // const recherche = url?.searchParams.get("recherche") ?? "";
+  const recherche = url?.searchParams.get("recherche") ?? "";
   const rechercheProfesseur =
     url?.searchParams.get("rechercheProfesseur") ?? "";
 
@@ -107,9 +107,9 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
       </h1>
       <div class="container-fluid">
         <div class="row gx-4">
-          {/* <div class="col">
+          <div class="col">
             <CarteArbreMaquette filière={filière} recherche={recherche} />
-          </div> */}
+          </div>
           <div class="col">
             <div class="card p-4">
               <EcForm ec={ec} />

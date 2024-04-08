@@ -18,6 +18,10 @@ export const html: HttpResponseWriter<[unknown, HttpHeaders?]> = (
   );
 };
 
+export const redirect: HttpResponseWriter<[string]> = (res, location) => {
+  return statusCode(res, 302, { location });
+};
+
 export const notFound: HttpResponseWriter = (res) => {
   return statusCode(res, 404);
 };

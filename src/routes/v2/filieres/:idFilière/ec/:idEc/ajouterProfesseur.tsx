@@ -1,11 +1,12 @@
 import { Html } from "@kitajs/html";
 import { eq } from "drizzle-orm";
-import { db, $filières, $ec } from "../../../../../db/db";
-import type { RouteHandler } from "../../../../../utils/route";
-import { html, notFound } from "../../../../../utils/httpResponse";
-import { Page } from "../../../../../components/Page";
-import { EcForm } from "../../../../../components/EcForm";
-import { CarteArbreMaquette } from "../../../../../components/CarteArbreMaquette";
+import { db, $filières, $ec } from "../../../../../../db/db";
+import type { RouteHandler } from "../../../../../../utils/route";
+import { html, notFound, redirect } from "../../../../../../utils/httpResponse";
+import { Page } from "../../../../../../components/Page";
+import { EcForm } from "../../../../../../components/EcForm2";
+// import { CarteArbreMaquette } from "../../../../../../components/CarteArbreMaquette";
+import { CarteAjoutProfesseur } from "../../../../../../components/CarteAjoutProfesseur";
 
 export const get: RouteHandler = async (req, res, { params }, url) => {
   if (!params?.idFilière) {
@@ -77,13 +78,24 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
           idEc: true,
         },
       },
+      ue: {
+        with: {
+          semestre: {
+            columns: {
+              idFilière: true,
+            },
+          },
+        },
+      },
     },
   });
   if (!ec) {
     return notFound(res);
   }
 
-  const recherche = url?.searchParams.get("recherche") ?? "";
+  // const recherche = url?.searchParams.get("recherche") ?? "";
+  const rechercheProfesseur =
+    url?.searchParams.get("rechercheProfesseur") ?? "";
 
   return html(
     res,
@@ -93,18 +105,31 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
         <span> </span>
         <small safe>{filière.nomOfficiel}</small>
       </h1>
-      <div class="container">
+      <div class="container-fluid">
         <div class="row gx-4">
-          <div class="col">
+          {/* <div class="col">
             <CarteArbreMaquette filière={filière} recherche={recherche} />
-          </div>
+          </div> */}
           <div class="col">
             <div class="card p-4">
               <EcForm ec={ec} />
             </div>
           </div>
+          <div class="col">
+            <CarteAjoutProfesseur recherche={rechercheProfesseur} />
+          </div>
         </div>
       </div>
     </Page>
   );
+};
+
+export const post: RouteHandler = async (req, res, { params }) => {
+  if (!params?.idFilière) {
+    return notFound(res);
+  }
+  if (!params?.idEc) {
+    return notFound(res);
+  }
+  return redirect(res, `/v2/filieres/${params.idFilière}/ec/${params.idEc}`);
 };

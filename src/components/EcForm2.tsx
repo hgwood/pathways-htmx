@@ -1,6 +1,6 @@
 import { Html } from "@kitajs/html";
 import { Table, type Column } from "./Table";
-import type { Ec } from "../db/types";
+import type { Assignation, Ec } from "../db/types";
 import { AddProfessorModal } from "./AddProfessorModal";
 
 const typeCours = [{ label: "Cours" }, { label: "TD" }, { label: "TP" }];
@@ -12,6 +12,7 @@ export function EcForm({
     id: true;
     numéro: true;
     volumesHoraire: { modalité: true; heures: true; minutes: true };
+    assignations: { modalité: true; professeur: { id: true; nom: true } };
     ue: {
       semestre: {
         idFilière: true;
@@ -76,7 +77,7 @@ export function EcForm({
         <fieldset class="my-3">
           <legend>Professeurs</legend>
           <div class="my-3">
-            <ProfesseursTable />
+            <ProfesseursTable assignations={ec.assignations} />
             <a
               href={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}/ajouterProfesseur`}
               class="btn btn-secondary btn-small"
@@ -179,15 +180,19 @@ export function EcForm({
   );
 }
 
-function ProfesseursTable() {
+function ProfesseursTable({
+  assignations,
+}: {
+  assignations: Assignation<{
+    modalité: true;
+    professeur: { id: true; nom: true };
+  }>[];
+}) {
   return (
     <Table
       id="professeurs-table"
       columns={professeursTableColumns}
-      dataSource={[
-        { nom: "Mme Dupont", modalité: "TD" },
-        { nom: "M. Crush", modalité: "TP" },
-      ]}
+      dataSource={assignations}
     />
   );
 }
@@ -195,22 +200,22 @@ function ProfesseursTable() {
 export const professeursTableColumns = [
   {
     title: "Nom",
-    render(item) {
+    render({ professeur }) {
       return (
         <>
-          <span safe>{item.nom}</span>
-          <input type="hidden" value={item.nom} />
+          <span safe>{professeur.nom}</span>
+          <input type="hidden" value={professeur.nom} />
         </>
       );
     },
   },
   {
     title: "Modalité",
-    render(item) {
+    render({ modalité }) {
       return (
         <select name="professeurType" class="form-control">
           {typeCours.map(({ label }) => (
-            <option selected={label === item.modalité} safe>
+            <option selected={label === modalité} safe>
               {label}
             </option>
           ))}
@@ -219,6 +224,6 @@ export const professeursTableColumns = [
     },
   },
 ] satisfies Column<{
-  nom: string;
+  professeur: { nom: string; id: number };
   modalité: string;
 }>[];

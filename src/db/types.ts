@@ -1,6 +1,8 @@
 import type {
+  $assignations,
   $ec,
   $matières,
+  $professeurs,
   $semestres,
   $ue,
   $volumesHoraire,
@@ -27,6 +29,7 @@ export type Ec<KS extends KeySelect<Ec> | AllFields = AllFields> = Selectable<
     ue: Ue;
     matière: Matière;
     volumesHoraire: VolumeHoraire[];
+    assignations: Assignation[];
   },
   KS
 >;
@@ -35,8 +38,19 @@ export type VolumeHoraire<
   KS extends KeySelect<VolumeHoraire> | AllFields = AllFields
 > = Selectable<typeof $volumesHoraire.$inferSelect, KS>;
 
-export type Matière<KS extends KeySelect<Ec> | AllFields = AllFields> =
+export type Matière<KS extends KeySelect<Matière> | AllFields = AllFields> =
   Selectable<typeof $matières.$inferSelect, KS>;
+
+export type Professeur<
+  KS extends KeySelect<Professeur> | AllFields = AllFields
+> = Selectable<typeof $professeurs.$inferSelect, KS>;
+
+export type Assignation<
+  KS extends KeySelect<Assignation> | AllFields = AllFields
+> = Selectable<
+  typeof $assignations.$inferSelect & { professeur: Professeur },
+  KS
+>;
 
 type Selectable<
   T extends object,

@@ -1,6 +1,13 @@
 import { Html } from "@kitajs/html";
-import { eq } from "drizzle-orm";
-import { db, $filières, $ec } from "../../../../../../db/db";
+import { eq, like } from "drizzle-orm";
+import * as streamConsumers from "node:stream/consumers";
+import {
+  db,
+  $filières,
+  $ec,
+  $assignations,
+  $professeurs,
+} from "../../../../../../db/db";
 import type { RouteHandler } from "../../../../../../utils/route";
 import { html, notFound, redirect } from "../../../../../../utils/httpResponse";
 import { Page } from "../../../../../../components/Page";
@@ -87,6 +94,19 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
           },
         },
       },
+      assignations: {
+        columns: {
+          modalité: true,
+        },
+        with: {
+          professeur: {
+            columns: {
+              id: true,
+              nom: true,
+            },
+          },
+        },
+      },
     },
   });
   if (!ec) {
@@ -96,6 +116,12 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
   const recherche = url?.searchParams.get("recherche") ?? "";
   const rechercheProfesseur =
     url?.searchParams.get("rechercheProfesseur") ?? "";
+
+  const professeurs = !rechercheProfesseur
+    ? []
+    : await db().query.$professeurs.findMany({
+        where: like($professeurs.nom, `%${rechercheProfesseur}%`),
+      });
 
   return html(
     res,
@@ -116,7 +142,10 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
             </div>
           </div>
           <div class="col">
-            <CarteAjoutProfesseur recherche={rechercheProfesseur} />
+            <CarteAjoutProfesseur
+              professeurs={professeurs}
+              recherche={rechercheProfesseur}
+            />
           </div>
         </div>
       </div>
@@ -131,5 +160,13 @@ export const post: RouteHandler = async (req, res, { params }) => {
   if (!params?.idEc) {
     return notFound(res);
   }
+  const form = new URLSearchParams(await streamConsumers.text(req));
+  const idProfesseur = Number(form.get("idProfesseur"));
+  if (Number.isNaN(idProfesseur)) {
+    // FIXME: return bad request
+    return notFound(res);
+  }
+  console.log({ idProfesseur, params });
+  await db().insert($assignations).values({ idProfesseur, idEc: params.idEc });
   return redirect(res, `/v2/filieres/${params.idFilière}/ec/${params.idEc}`);
 };

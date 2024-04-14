@@ -1,5 +1,14 @@
 import { getTableColumns, sql, type Table } from "drizzle-orm";
-import { db, $filières, $ue, $semestres, $ec, $matières } from "./db";
+import {
+  db,
+  $filières,
+  $ue,
+  $semestres,
+  $ec,
+  $matières,
+  $professeurs,
+  $assignations,
+} from "./db";
 
 await db().delete($ec);
 await db().delete($matières);
@@ -493,6 +502,73 @@ await db()
   .onConflictDoUpdate({
     target: $ec.id,
     set: allColumns($ec),
+  });
+
+await db()
+  .insert($professeurs)
+  .values([
+    { id: 1, nom: "Pierre DUPONT" },
+    { id: 2, nom: "Juliette LEFEVRE" },
+    { id: 3, nom: "Arnaud MERCIER" },
+    { id: 4, nom: "Marie LAURENCE" },
+    { id: 5, nom: "Lucien BOUCHARD" },
+    { id: 6, nom: "Gabrielle TARDIF" },
+    { id: 7, nom: "Olivier RENAULT" },
+    { id: 8, nom: "Yvette POIRIER" },
+    { id: 9, nom: "Édouard DUBOIS" },
+    { id: 10, nom: "Camille DURAND" },
+    { id: 11, nom: "Bernard BLANCHARD" },
+    { id: 12, nom: "Vivienne MOREAU" },
+    { id: 13, nom: "Frédéric CHARPENTIER" },
+    { id: 14, nom: "Yannick GAGNON" },
+    { id: 15, nom: "Sylvie LEMOINE" },
+    { id: 16, nom: "Gérard BEAUCHAMP" },
+    { id: 17, nom: "Céline ROUSSEAU" },
+    { id: 18, nom: "Louis-Philippe GAUTHIER" },
+    { id: 19, nom: "Florence GUERIN" },
+    { id: 20, nom: "Maximilien FAURE" },
+    { id: 21, nom: "Isabelle LACROIX" },
+    { id: 22, nom: "Étienne FONTAINE" },
+    { id: 23, nom: "Margot LECLERC" },
+    { id: 24, nom: "Alphonse BÉLANGER" },
+    { id: 25, nom: "Amandine DELORME" },
+    { id: 26, nom: "Jean-François PELLETIER" },
+    { id: 27, nom: "Mathilde ROY" },
+    { id: 28, nom: "Théophile DUFRESNE" },
+    { id: 29, nom: "Delphine PERRAULT" },
+    { id: 30, nom: "Romain THIBAULT" },
+    { id: 31, nom: "Elodie GIROUX" },
+    { id: 32, nom: "Tristan CHEVALIER" },
+    { id: 33, nom: "Valérie DUPUIS" },
+    { id: 34, nom: "Augustin LAFONTAINE" },
+    { id: 35, nom: "Rosalie TREMBLAY" },
+    { id: 36, nom: "Hiroshi TANAKA" },
+    { id: 37, nom: "Sofia RODRIGUEZ" },
+    { id: 38, nom: "Liam O'SULLIVAN" },
+    { id: 39, nom: "Rajeev GUPTA" },
+    { id: 40, nom: "Yulia IVANOVA" },
+    { id: 41, nom: "Chen WEI" },
+    { id: 42, nom: "Abdullah AL-RASHID" },
+    { id: 43, nom: "Lucia DE LA CRUZ" },
+    { id: 44, nom: "Dimitri PETROV" },
+    { id: 45, nom: "Isabella ROSSI" },
+    { id: 46, nom: "Jackson SMITH" },
+    { id: 47, nom: "Akiko YAMAMOTO" },
+    { id: 48, nom: "Juan Carlos MENDOZA" },
+    { id: 49, nom: "Olga KUZNETSOVA" },
+    { id: 50, nom: "Kwame NKRUMAH" },
+  ])
+  .onConflictDoUpdate({
+    target: $professeurs.id,
+    set: allColumns($professeurs),
+  });
+
+await db()
+  .insert($assignations)
+  .values([{ idEc: 1, idProfesseur: 26, modalité: "Cours", heures: 3 }])
+  .onConflictDoUpdate({
+    target: [$assignations.idProfesseur, $assignations.idEc],
+    set: allColumns($assignations),
   });
 
 function allColumns<T extends Table>(table: T) {

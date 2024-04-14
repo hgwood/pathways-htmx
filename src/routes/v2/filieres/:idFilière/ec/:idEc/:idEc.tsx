@@ -86,6 +86,11 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
           },
         },
       },
+      assignations: {
+        with: {
+          professeur: {},
+        },
+      },
     },
   });
   if (!ec) {

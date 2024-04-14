@@ -1,5 +1,11 @@
 import { relations } from "drizzle-orm";
-import { text, integer, sqliteTable, unique } from "drizzle-orm/sqlite-core";
+import {
+  text,
+  integer,
+  sqliteTable,
+  unique,
+  primaryKey,
+} from "drizzle-orm/sqlite-core";
 
 export const $filières = sqliteTable("filière", {
   id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
@@ -83,6 +89,7 @@ export const $ecRelations = relations($ec, ({ one, many }) => ({
     references: [$matières.id],
   }),
   volumesHoraire: many($volumesHoraire),
+  assignations: many($assignations),
 }));
 
 export const $matières = sqliteTable("matière", {
@@ -108,3 +115,37 @@ export const $volumesHoraireRelations = relations(
     }),
   })
 );
+
+export const $professeurs = sqliteTable("professeur", {
+  id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
+  nom: text("nom").notNull(),
+});
+
+export const $assignations = sqliteTable(
+  "assignation",
+  {
+    idProfesseur: integer("id_professeur", { mode: "number" })
+      .notNull()
+      .references(() => $professeurs.id),
+    idEc: integer("id_ec", { mode: "number" })
+      .notNull()
+      .references(() => $ec.id),
+    modalité: text("modalité").notNull().default("Cours"),
+    heures: integer("heures", { mode: "number" }).notNull().default(0),
+    minutes: integer("minutes", { mode: "number" }).notNull().default(0),
+  },
+  (table) => ({
+    pk: primaryKey(table.idProfesseur, table.idEc),
+  })
+);
+
+export const $assignationsRelations = relations($assignations, ({ one }) => ({
+  ec: one($ec, {
+    fields: [$assignations.idEc],
+    references: [$ec.id],
+  }),
+  professeur: one($professeurs, {
+    fields: [$assignations.idProfesseur],
+    references: [$professeurs.id],
+  }),
+}));

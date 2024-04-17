@@ -12,7 +12,12 @@ export function EcForm({
     id: true;
     numéro: true;
     volumesHoraire: { modalité: true; heures: true; minutes: true };
-    assignations: { modalité: true; professeur: { id: true; nom: true } };
+    assignations: {
+      modalité: true;
+      professeur: { id: true; nom: true };
+      heures: true;
+      minutes: true;
+    };
     ue: {
       semestre: {
         idFilière: true;
@@ -30,48 +35,9 @@ export function EcForm({
       <form action="submit" method="POST">
         <fieldset class="my-3">
           <legend>Volume horaire</legend>
-          <Table
-            id="volume-table"
-            columns={[
-              {
-                title: "Modalité",
-                render({ modalité }) {
-                  return modalité;
-                },
-              },
-              {
-                title: "Volume",
-                render({ heures, minutes }) {
-                  return (
-                    <div class="input-group">
-                      <input
-                        name="volumeHoraireCoursHeures"
-                        type="number"
-                        class="form-control"
-                        placeholder="Heures"
-                        aria-label="Cours : heures"
-                        min="0"
-                        value={heures.toString()}
-                      ></input>
-                      <span class="input-group-text">h</span>
-                      <input
-                        name="volumeHoraireCoursMinutes"
-                        type="number"
-                        class="form-control"
-                        placeholder="Minutes"
-                        aria-label="Cours : minutes"
-                        step="15"
-                        min="0"
-                        max="45"
-                        value={minutes.toString()}
-                      ></input>
-                    </div>
-                  );
-                },
-              },
-            ]}
-            dataSource={ec.volumesHoraire}
-          />
+          <div class="row">
+            <div class="col"></div>
+          </div>
         </fieldset>
 
         <fieldset class="my-3">
@@ -223,7 +189,17 @@ export const professeursTableColumns = [
       );
     },
   },
-] satisfies Column<{
-  professeur: { nom: string; id: number };
-  modalité: string;
-}>[];
+  {
+    title: "Nombre d'heures",
+    render({ heures }) {
+      return (
+        <>
+          <div class="input-group">
+            <input type="number" value={String(heures)} class="form-control" />
+            <span class="input-group-text">h</span>
+          </div>
+        </>
+      );
+    },
+  },
+] satisfies Column<Assignation>[];

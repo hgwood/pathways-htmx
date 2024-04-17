@@ -25,7 +25,7 @@ export function Table<T>({
           ))}
         </tr>
       </thead>
-      <tbody class="align-baseline">
+      <tbody class="align-middle">
         {dataSource.map((item) => (
           <TableRow item={item} columns={columns} />
         ))}

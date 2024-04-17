@@ -25,6 +25,14 @@ export function EcForm({
     };
   }>;
 }) {
+  const heuresParModalité = ["Cours", "TD", "TP"]
+    .map((modalité) => {
+      const heures = ec.assignations
+        .filter((assignation) => assignation.modalité === modalité)
+        .reduce((sum, assignation) => sum + assignation.heures, 0);
+      return { modalité, heures };
+    })
+    .filter(({ heures }) => heures > 0);
   const typeExamen = [
     { label: "Ecrit" },
     { label: "Oral" },
@@ -35,8 +43,13 @@ export function EcForm({
       <form action="submit" method="POST">
         <fieldset class="my-3">
           <legend>Volume horaire</legend>
-          <div class="row">
-            <div class="col"></div>
+          <div class="row text-center">
+            {heuresParModalité.map(({ modalité, heures }) => (
+              <div class="col p-4">
+                <p class="display-6">{heures}h</p>
+                <p safe>{modalité}</p>
+              </div>
+            ))}
           </div>
         </fieldset>
 

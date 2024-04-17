@@ -18,8 +18,12 @@ export const html: HttpResponseWriter<[unknown, HttpHeaders?]> = (
   );
 };
 
-export const redirect: HttpResponseWriter<[string]> = (res, location) => {
-  return statusCode(res, 302, { location });
+export const redirect: HttpResponseWriter<[string, HttpHeaders?]> = (
+  res,
+  location,
+  headers
+) => {
+  return statusCode(res, 302, { location, ...headers });
 };
 
 export const notFound: HttpResponseWriter = (res) => {

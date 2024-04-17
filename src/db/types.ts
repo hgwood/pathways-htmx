@@ -48,7 +48,7 @@ export type Professeur<
 export type Assignation<
   KS extends KeySelect<Assignation> | AllFields = AllFields
 > = Selectable<
-  typeof $assignations.$inferSelect & { professeur: Professeur },
+  typeof $assignations.$inferSelect & { professeur: Professeur; ec: Ec },
   KS
 >;
 

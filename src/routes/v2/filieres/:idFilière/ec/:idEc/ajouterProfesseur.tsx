@@ -4,7 +4,6 @@ import * as streamConsumers from "node:stream/consumers";
 import {
   db,
   $filières,
-  $ec,
   $assignations,
   $professeurs,
 } from "../../../../../../db/db";
@@ -14,6 +13,7 @@ import { Page } from "../../../../../../components/Page";
 import { EcForm } from "../../../../../../components/EcForm2";
 import { CarteArbreMaquette } from "../../../../../../components/CarteArbreMaquette";
 import { CarteAjoutProfesseur } from "../../../../../../components/CarteAjoutProfesseur";
+import { fetchEcForForm } from "./:idEc";
 
 export const get: RouteHandler = async (req, res, { params }, url) => {
   if (!params?.idFilière) {
@@ -68,47 +68,7 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
   if (!params?.idEc) {
     return notFound(res);
   }
-  const ec = await db().query.$ec.findFirst({
-    columns: {
-      id: true,
-      numéro: true,
-      idMatière: true,
-      idUe: true,
-    },
-    where: eq($ec.id, params.idEc),
-    with: {
-      volumesHoraire: {
-        columns: {
-          heures: true,
-          minutes: true,
-          modalité: true,
-          idEc: true,
-        },
-      },
-      ue: {
-        with: {
-          semestre: {
-            columns: {
-              idFilière: true,
-            },
-          },
-        },
-      },
-      assignations: {
-        columns: {
-          modalité: true,
-        },
-        with: {
-          professeur: {
-            columns: {
-              id: true,
-              nom: true,
-            },
-          },
-        },
-      },
-    },
-  });
+  const ec = await fetchEcForForm(params?.idEc);
   if (!ec) {
     return notFound(res);
   }

@@ -100,7 +100,7 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
               actionRecherche={url?.pathname}
             />
           </div>
-          <div class="col">
+          <div class="col overflow-x-hidden">
             <div class="card p-4">
               <EcForm ec={ec} />
             </div>

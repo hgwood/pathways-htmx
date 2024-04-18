@@ -12,6 +12,9 @@ export function EcForm({
     id: true;
     numéro: true;
     volumesHoraire: { modalité: true; heures: true };
+    matière: {
+      nom: true;
+    };
     assignations: {
       modalité: true;
       professeur: { id: true; nom: true };
@@ -41,6 +44,8 @@ export function EcForm({
   ];
   return (
     <div id="ecForm">
+      <h2 class="text-truncate">{ec.matière.nom}</h2>
+
       <fieldset class="my-3">
         <legend>Volume horaire</legend>
         <EcFormVolumeHoraire assignations={ec.assignations} />

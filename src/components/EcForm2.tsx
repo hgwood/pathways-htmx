@@ -200,19 +200,7 @@ export const professeursTableColumns = [
     },
   },
   {
-    renderTitle() {
-      return (
-        <>
-          <span>Nombre d'heures</span>
-          <div
-            class="htmx-indicator spinner-border spinner-border-sm float-end"
-            role="status"
-          >
-            <span class="visually-hidden">Saving...</span>
-          </div>
-        </>
-      );
-    },
+    title: "Nombre d'heures",
     render({ heures, ec }) {
       return (
         <>

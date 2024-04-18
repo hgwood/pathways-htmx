@@ -19,8 +19,18 @@ export function Table<T>({
     <table class="table" id={id}>
       <thead>
         <tr>
-          {columns.map(({ title, renderTitle: safeRenderTitle }) => (
-            <th scope="col">{title ?? safeRenderTitle?.()}</th>
+          {columns.map(({ title, renderTitle: safeRenderTitle }, index) => (
+            <th scope="col">
+              {title ?? safeRenderTitle?.()}
+              {index === columns.length - 1 && (
+                <div
+                  class="htmx-indicator spinner-border spinner-border-sm float-end"
+                  role="status"
+                >
+                  <span class="visually-hidden">Saving...</span>
+                </div>
+              )}
+            </th>
           ))}
         </tr>
       </thead>

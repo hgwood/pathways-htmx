@@ -220,7 +220,7 @@ export const professeursTableColumns = [
               hx-post={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}`}
               hx-target="#volumeHoraire"
               hx-swap="outerHTML"
-              hx-trigger="input"
+              hx-trigger="input changed delay:200ms"
               hx-indicator="#professeursTable"
             />
             <span class="input-group-text">h</span>

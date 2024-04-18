@@ -5,7 +5,8 @@ import { ArbreMaquette } from "./ArbreMaquette";
 export const CarteArbreMaquette: Component<{
   filière: Filière;
   recherche: string;
-}> = ({ filière, recherche }) => {
+  actionRecherche?: string;
+}> = ({ filière, recherche, actionRecherche }) => {
   return (
     <div class="card p-4">
       <form method="GET">
@@ -18,11 +19,12 @@ export const CarteArbreMaquette: Component<{
             type="search"
             class="form-control"
             value={recherche}
-            // hx-post={`${filière.id}/recherche`}
-            // hx-trigger="input changed delay:100ms, search"
-            // hx-target="#arbre-filière"
-            // hx-swap="outerHTML"
-            // hx-indicator=".htmx-indicator"
+            hx-get={actionRecherche}
+            hx-trigger="input changed delay:200ms, search"
+            hx-target="#arbre-filière"
+            hx-swap="outerHTML"
+            hx-select="#arbre-filière"
+            hx-replace-url="true"
           />
         </div>
       </form>

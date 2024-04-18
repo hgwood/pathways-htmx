@@ -72,7 +72,11 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
       <div class="container">
         <div class="row gx-4">
           <div class="col">
-            <CarteArbreMaquette filière={filière} recherche={recherche} />
+            <CarteArbreMaquette
+              filière={filière}
+              recherche={recherche}
+              actionRecherche={url?.pathname}
+            />
           </div>
         </div>
       </div>

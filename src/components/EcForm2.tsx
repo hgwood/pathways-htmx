@@ -1,6 +1,7 @@
 import { Html } from "@kitajs/html";
 import { Table, type Column } from "./Table";
 import type { Assignation, Ec } from "../db/types";
+import { EcFormVolumeHoraire } from "./EcFormVolumeHoraire";
 
 const typeCours = [{ label: "Cours" }, { label: "TD" }, { label: "TP" }];
 
@@ -33,14 +34,6 @@ export function EcForm({
     };
   }>;
 }) {
-  const heuresParModalité = ["Cours", "TD", "TP"]
-    .map((modalité) => {
-      const heures = ec.assignations
-        .filter((assignation) => assignation.modalité === modalité)
-        .reduce((sum, assignation) => sum + assignation.heures, 0);
-      return { modalité, heures };
-    })
-    .filter(({ heures }) => heures > 0);
   const typeExamen = [
     { label: "Ecrit" },
     { label: "Oral" },
@@ -50,14 +43,7 @@ export function EcForm({
     <div id="ecForm">
       <fieldset class="my-3">
         <legend>Volume horaire</legend>
-        <div class="row text-center">
-          {heuresParModalité.map(({ modalité, heures }) => (
-            <div class="col p-4">
-              <p class="display-6">{heures}h</p>
-              <p safe>{modalité}</p>
-            </div>
-          ))}
-        </div>
+        <EcFormVolumeHoraire assignations={ec.assignations} />
       </fieldset>
 
       <fieldset class="my-3">
@@ -194,7 +180,9 @@ export const professeursTableColumns = [
           name="modalité"
           class="form-control"
           hx-post={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}`}
-          hx-target="body"
+          hx-target="#volumeHoraire"
+          hx-swap="outerHTML"
+          hx-trigger="input"
         >
           {typeCours.map(({ label }) => (
             <option selected={label === modalité} safe>
@@ -217,7 +205,9 @@ export const professeursTableColumns = [
               value={String(heures)}
               class="form-control"
               hx-post={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}`}
-              hx-target="body"
+              hx-target="#volumeHoraire"
+              hx-swap="outerHTML"
+              hx-trigger="input"
             />
             <span class="input-group-text">h</span>
           </div>

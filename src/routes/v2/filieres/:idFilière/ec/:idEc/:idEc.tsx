@@ -8,6 +8,7 @@ import { html, notFound, redirect } from "../../../../../../utils/httpResponse";
 import { Page } from "../../../../../../components/Page";
 import { EcForm } from "../../../../../../components/EcForm2";
 import { CarteArbreMaquette } from "../../../../../../components/CarteArbreMaquette";
+import { EcFormVolumeHoraire } from "../../../../../../components/EcFormVolumeHoraire";
 
 export const get: RouteHandler = async (req, res, { params }, url) => {
   if (!params?.idFilière) {
@@ -118,9 +119,14 @@ export const post: RouteHandler = async (req, res, { params }) => {
         )
       );
   }
-  return redirect(res, `/v2/filieres/${params.idFilière}/ec/${params.idEc}`, {
-    "HX-Redirect": "true",
-  });
+  const assignations = await db()
+    .select()
+    .from($assignations)
+    .where(eq($assignations.idEc, idEc));
+  // return redirect(res, `/v2/filieres/${params.idFilière}/ec/${params.idEc}`, {
+  //   "HX-Redirect": "true",
+  // });
+  return html(res, <EcFormVolumeHoraire assignations={assignations} />);
 };
 
 export function fetchEcForForm(id: number) {

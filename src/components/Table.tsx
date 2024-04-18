@@ -2,6 +2,7 @@ import { Html } from "@kitajs/html";
 
 export interface Column<T> {
   title?: string;
+  renderTitle?: () => JSX.Element;
   render?: (item: T) => JSX.Element;
 }
 
@@ -18,10 +19,8 @@ export function Table<T>({
     <table class="table" id={id}>
       <thead>
         <tr>
-          {columns.map(({ title }) => (
-            <th scope="col" safe>
-              {title}
-            </th>
+          {columns.map(({ title, renderTitle: safeRenderTitle }) => (
+            <th scope="col">{title ?? safeRenderTitle?.()}</th>
           ))}
         </tr>
       </thead>

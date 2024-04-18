@@ -149,7 +149,7 @@ export function EcForm({
 function ProfesseursTable({ assignations }: { assignations: Assignation[] }) {
   return (
     <Table
-      id="professeurs-table"
+      id="professeursTable"
       columns={professeursTableColumns}
       dataSource={assignations}
     />
@@ -183,6 +183,7 @@ export const professeursTableColumns = [
           hx-target="#volumeHoraire"
           hx-swap="outerHTML"
           hx-trigger="input"
+          hx-indicator="#professeursTable"
         >
           {typeCours.map(({ label }) => (
             <option selected={label === modalité} safe>
@@ -194,7 +195,19 @@ export const professeursTableColumns = [
     },
   },
   {
-    title: "Nombre d'heures",
+    renderTitle() {
+      return (
+        <>
+          <span>Nombre d'heures</span>
+          <div
+            class="htmx-indicator spinner-border spinner-border-sm float-end"
+            role="status"
+          >
+            <span class="visually-hidden">Saving...</span>
+          </div>
+        </>
+      );
+    },
     render({ heures, ec }) {
       return (
         <>
@@ -208,6 +221,7 @@ export const professeursTableColumns = [
               hx-target="#volumeHoraire"
               hx-swap="outerHTML"
               hx-trigger="input"
+              hx-indicator="#professeursTable"
             />
             <span class="input-group-text">h</span>
           </div>

@@ -44,6 +44,7 @@ export function EcFormVolumeHoraire({
           <div class="progress-stacked">
             {pourcentageHeuresParModalité.map(({ modalité, pourcentage }) => (
               <div
+                id={`volumeHoraireProgress${modalité}`}
                 class="progress"
                 role="progressbar"
                 aria-label={`Pourcentage ${modalité}`}

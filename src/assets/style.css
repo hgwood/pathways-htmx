@@ -13,3 +13,7 @@ ul {
   font-size: unset;
   line-height: unset;
 }
+
+.progress {
+  transition: width 0.6s ease;
+}

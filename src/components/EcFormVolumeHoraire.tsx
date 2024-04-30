@@ -6,6 +6,14 @@ export function EcFormVolumeHoraire({
 }: {
   assignations: Assignation<{ heures: true; modalité: true }>[];
 }) {
+  if (assignations.length === 0) {
+    return (
+      <div id="volumeHoraire" class="alert alert-warning" role="alert">
+        Aucun professeur n'est assigné à cet EC. Ajoutez un professeur
+        ci-dessous.
+      </div>
+    );
+  }
   const heuresParModalité = ["Cours", "TD", "TP"]
     .map((modalité) => {
       const heures = assignations
@@ -18,6 +26,14 @@ export function EcFormVolumeHoraire({
     (total, { heures }) => total + heures,
     0
   );
+  if (totalHeures === 0) {
+    return (
+      <div id="volumeHoraire" class="alert alert-warning" role="alert">
+        Aucun professeur n'a d'heures assignées à cet EC. Ajustez les heures des
+        professeurs ci-dessous.
+      </div>
+    );
+  }
   const pourcentageHeuresParModalité = heuresParModalité.map(
     ({ modalité, heures }) => ({
       modalité,

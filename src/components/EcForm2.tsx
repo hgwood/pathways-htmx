@@ -188,7 +188,7 @@ export const professeursTableColumns = [
           hx-target="#volumeHoraire"
           hx-swap="outerHTML"
           hx-trigger="input"
-          hx-indicator="#professeursTable"
+          hx-indicator="closest table"
         >
           {typeCours.map(({ label }) => (
             <option selected={label === modalité} safe>
@@ -203,22 +203,36 @@ export const professeursTableColumns = [
     title: "Nombre d'heures",
     render({ heures, ec }) {
       return (
-        <>
-          <div class="input-group">
-            <input
-              name="nombreHeures"
-              type="number"
-              value={String(heures)}
-              class="form-control"
-              hx-post={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}`}
-              hx-target="#volumeHoraire"
-              hx-swap="outerHTML"
-              hx-trigger="input changed delay:200ms"
-              hx-indicator="#professeursTable"
-            />
-            <span class="input-group-text">h</span>
-          </div>
-        </>
+        <input
+          name="nombreHeures"
+          type="number"
+          value={String(heures)}
+          class="form-control"
+          hx-post={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}`}
+          hx-target="#volumeHoraire"
+          hx-swap="outerHTML"
+          hx-trigger="input changed delay:200ms"
+          hx-indicator="closest table"
+        />
+      );
+    },
+  },
+  {
+    render({ ec, idProfesseur }) {
+      return (
+        <button
+          type="button"
+          class="btn btn-sm btn-link"
+          hx-post={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}/supprimerProfesseur`}
+          hx-vals={JSON.stringify({
+            idProfesseur,
+          })}
+          hx-params="not modalité, nombreHeures"
+          hx-target="#ecForm"
+          hx-swap="outerHTML"
+        >
+          <i class="bi bi-trash3"></i>
+        </button>
       );
     },
   },

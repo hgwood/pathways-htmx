@@ -130,7 +130,6 @@ export const post: RouteHandler = async (req, res, { params }) => {
     // FIXME: return bad request
     return notFound(res);
   }
-  console.log({ idProfesseur, params });
   await db().insert($assignations).values({ idProfesseur, idEc: params.idEc });
   return redirect(res, `/v2/filieres/${params.idFilière}/ec/${params.idEc}`);
 };

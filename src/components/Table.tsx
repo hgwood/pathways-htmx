@@ -3,7 +3,7 @@ import { Html } from "@kitajs/html";
 export interface Column<T> {
   title?: string;
   renderTitle?: () => JSX.Element;
-  render?: (item: T) => JSX.Element;
+  render?: (item: T, index: number, items: T[]) => JSX.Element;
 }
 
 export function Table<T>({
@@ -35,8 +35,8 @@ export function Table<T>({
         </tr>
       </thead>
       <tbody class="align-middle">
-        {dataSource.map((item) => (
-          <TableRow item={item} columns={columns} />
+        {dataSource.map((item, index, items) => (
+          <TableRow item={item} index={index} items={items} columns={columns} />
         ))}
       </tbody>
     </table>
@@ -45,15 +45,19 @@ export function Table<T>({
 
 export function TableRow<T>({
   item,
+  index,
+  items,
   columns,
 }: {
   item: T;
+  index: number;
+  items: T[];
   columns: Column<T>[];
 }) {
   return (
     <tr>
       {columns?.map(({ render: safeRender }) => (
-        <td>{safeRender?.(item)}</td>
+        <td>{safeRender?.(item, index, items)}</td>
       ))}
     </tr>
   );

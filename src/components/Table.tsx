@@ -35,9 +35,20 @@ export function Table<T>({
         </tr>
       </thead>
       <tbody class="align-middle">
-        {dataSource.map((item, index, items) => (
-          <TableRow item={item} index={index} items={items} columns={columns} />
-        ))}
+        {dataSource.length > 0 ? (
+          dataSource.map((item, index, items) => (
+            <TableRow
+              item={item}
+              index={index}
+              items={items}
+              columns={columns}
+            />
+          ))
+        ) : (
+          <tr>
+            <td colspan={columns.length}>Aucune donnée</td>
+          </tr>
+        )}
       </tbody>
     </table>
   );

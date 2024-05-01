@@ -8,7 +8,7 @@ export const CarteArbreMaquette: Component<{
   actionRecherche?: string;
 }> = ({ filière, recherche, actionRecherche }) => {
   return (
-    <div class="card p-4">
+    <div id="carteArbreMaquette" class="card p-4">
       <form method="GET">
         <div class="input-group">
           <span class="input-group-text">

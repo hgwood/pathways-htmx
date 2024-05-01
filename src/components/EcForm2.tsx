@@ -58,6 +58,7 @@ export function EcForm({
           <a
             href={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}/ajouterProfesseur`}
             class="btn btn-secondary btn-small"
+            hx-boost="true"
           >
             Ajouter un professeur
           </a>

@@ -80,7 +80,7 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
       </h1>
       <div class="container-fluid">
         <div class="row gx-4">
-          <div class="col">
+          <div class="col slide-it">
             <CarteArbreMaquette
               filière={filière}
               recherche={recherche}
@@ -88,7 +88,7 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
             />
           </div>
           <div class="col overflow-x-hidden">
-            <div class="card p-4">
+            <div id="carteEcForm" class="card p-4">
               <EcForm ec={ec} />
             </div>
           </div>

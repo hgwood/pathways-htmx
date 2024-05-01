@@ -14,6 +14,7 @@ import { EcForm } from "../../../../../../components/EcForm2";
 import { CarteArbreMaquette } from "../../../../../../components/CarteArbreMaquette";
 import { CarteAjoutProfesseur } from "../../../../../../components/CarteAjoutProfesseur";
 import { fetchEcForForm } from "./:idEc";
+import { isHtmxRequest } from "../../../../../../utils/htmx";
 
 export const get: RouteHandler = async (req, res, { params }, url) => {
   if (!params?.idFilière) {
@@ -82,6 +83,17 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
     : await db().query.$professeurs.findMany({
         where: like($professeurs.nom, `%${rechercheProfesseur}%`),
       });
+  console.log(isHtmxRequest(req), req.headers, req.rawHeaders);
+  if (isHtmxRequest(req)) {
+    return html(
+      res,
+      <CarteAjoutProfesseur
+        professeurs={professeurs}
+        recherche={rechercheProfesseur}
+        lienRecherche={`/v2/filieres/${params.idFilière}/ec/${params.idEc}/ajouterProfesseur`}
+      />
+    );
+  }
 
   return html(
     res,
@@ -109,6 +121,7 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
             <CarteAjoutProfesseur
               professeurs={professeurs}
               recherche={rechercheProfesseur}
+              lienRecherche={`/v2/filieres/${params.idFilière}/ec/${params.idEc}/ajouterProfesseur`}
             />
           </div>
         </div>

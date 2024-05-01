@@ -4,10 +4,11 @@ import type { Professeur } from "../db/types";
 export const CarteAjoutProfesseur: Component<{
   professeurs: Professeur[];
   recherche: string;
+  lienRecherche?: string;
   lienSoumission?: string;
-}> = ({ professeurs, recherche, lienSoumission = "" }) => {
+}> = ({ professeurs, recherche, lienRecherche = "", lienSoumission = "" }) => {
   return (
-    <div class="card p-4">
+    <div id="carteAjoutProfesseur" class="card p-4">
       <form method="get">
         <div class="input-group">
           <span class="input-group-text">
@@ -18,10 +19,10 @@ export const CarteAjoutProfesseur: Component<{
             type="search"
             class="form-control"
             value={recherche}
-            // hx-post={`${filière.id}/recherche`}
-            // hx-trigger="input changed delay:100ms, search"
-            // hx-target="#arbre-filière"
-            // hx-swap="outerHTML"
+            hx-get={lienRecherche}
+            hx-trigger="input changed delay:200ms, search"
+            hx-target="#carteAjoutProfesseur"
+            hx-swap="outerHTML"
             // hx-indicator=".htmx-indicator"
           />
         </div>

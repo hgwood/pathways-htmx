@@ -1,11 +1,12 @@
 import { Html, type Component } from "@kitajs/html";
 import type { Professeur } from "../db/types";
+import { ResultatsRechercheProfesseurs } from "./ResultatsRechercheProfesseurs";
 
 export const CarteAjoutProfesseur: Component<{
   professeurs: Professeur[];
+  lienSoumission?: string;
   recherche: string;
   lienRecherche?: string;
-  lienSoumission?: string;
 }> = ({ professeurs, recherche, lienRecherche = "", lienSoumission = "" }) => {
   return (
     <div id="carteAjoutProfesseur" class="card p-4">
@@ -21,37 +22,18 @@ export const CarteAjoutProfesseur: Component<{
             value={recherche}
             hx-get={lienRecherche}
             hx-trigger="input changed delay:200ms, search"
-            hx-target="#carteAjoutProfesseur"
+            hx-target="#resultatsRechercheProfesseurs"
             hx-swap="outerHTML"
+            hx-replace-url="true"
             // hx-indicator=".htmx-indicator"
           />
         </div>
       </form>
       <form method="post" action={lienSoumission}>
-        <ul class="list-group">
-          {professeurs.map(({ id, nom }, index) => (
-            <li class="list-group-item list-group-item-action">
-              <input
-                class="form-check-input d-none"
-                type="submit"
-                name="idProfesseur"
-                value={String(id)}
-                id={`professorSearchResult${index}`}
-                // hx-post="ajoutProfesseur"
-                // hx-target="#professeurs-table > tbody"
-                // hx-swap="beforeend"
-                // data-bs-dismiss="modal"
-              />
-              <label
-                class="form-check-label stretched-link"
-                for={`professorSearchResult${index}`}
-                safe
-              >
-                {nom}
-              </label>
-            </li>
-          ))}
-        </ul>
+        <ResultatsRechercheProfesseurs
+          professeurs={professeurs}
+          lienSoumission={lienSoumission}
+        />
       </form>
     </div>
   );

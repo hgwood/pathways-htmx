@@ -14,7 +14,8 @@ import { EcForm } from "../../../../../../components/EcForm2";
 import { CarteArbreMaquette } from "../../../../../../components/CarteArbreMaquette";
 import { CarteAjoutProfesseur } from "../../../../../../components/CarteAjoutProfesseur";
 import { fetchEcForForm } from "./:idEc";
-import { isHtmxRequest } from "../../../../../../utils/htmx";
+import { htmxTriggerName } from "../../../../../../utils/htmx";
+import { ResultatsRechercheProfesseurs } from "../../../../../../components/ResultatsRechercheProfesseurs";
 
 export const get: RouteHandler = async (req, res, { params }, url) => {
   if (!params?.idFilière) {
@@ -83,14 +84,13 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
     : await db().query.$professeurs.findMany({
         where: like($professeurs.nom, `%${rechercheProfesseur}%`),
       });
-  console.log(isHtmxRequest(req), req.headers, req.rawHeaders);
-  if (isHtmxRequest(req)) {
+
+  if (htmxTriggerName(req) === "rechercheProfesseur") {
     return html(
       res,
-      <CarteAjoutProfesseur
+      <ResultatsRechercheProfesseurs
         professeurs={professeurs}
-        recherche={rechercheProfesseur}
-        lienRecherche={`/v2/filieres/${params.idFilière}/ec/${params.idEc}/ajouterProfesseur`}
+        lienSoumission={`/v2/filieres/${params.idFilière}/ec/${params.idEc}/ajouterProfesseur`}
       />
     );
   }

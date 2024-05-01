@@ -223,7 +223,7 @@ export const professeursTableColumns = [
       return (
         <button
           type="button"
-          class="btn btn-sm btn-link"
+          class="btn btn-sm"
           hx-post={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}/supprimerProfesseur`}
           hx-vals={JSON.stringify({
             idProfesseur,

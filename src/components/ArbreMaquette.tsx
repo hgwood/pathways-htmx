@@ -42,6 +42,7 @@ export const ArbreMaquette: Component<ArbreMaquette> = ({
               <li>
                 <a
                   href={`/v2/filieres/${semestre.idFilière}/ec/${ec.id}?recherche=${recherche}`}
+                  hx-boost="true"
                 >
                   {ec.matière.nom}
                 </a>

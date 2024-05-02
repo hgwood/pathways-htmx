@@ -38,7 +38,9 @@ export const Page: Component<{
           ></script>
         </head>
         <body
-          hx-on-htmx-error="bootstrap.Toast.getOrCreateInstance(htmx.find('#liveToast')).show()"
+          // hx-on-toast-success="console.log(event)"
+          hx-on-toast-success="bootstrap.Toast.getOrCreateInstance(htmx.find('#successToast')).show()"
+          hx-on-htmx-error="bootstrap.Toast.getOrCreateInstance(htmx.find('#errorToast')).show()"
           {...props}
         >
           <div class="container-fluid">{safeChildren}</div>
@@ -46,7 +48,7 @@ export const Page: Component<{
           <div class="toast-container position-fixed top-0 end-0 p-3">
             <div
               class="toast align-items-center text-bg-danger border-0"
-              id="liveToast"
+              id="errorToast"
               role="alert"
               aria-live="assertive"
               aria-atomic="true"
@@ -55,6 +57,25 @@ export const Page: Component<{
                 <div class="toast-body">
                   Une erreur inattendue est survenue.
                 </div>
+                <button
+                  type="button"
+                  class="btn-close btn-close-white me-2 m-auto"
+                  data-bs-dismiss="toast"
+                  aria-label="Close"
+                ></button>
+              </div>
+            </div>
+          </div>
+          <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div
+              class="toast align-items-center text-bg-success border-0"
+              id="successToast"
+              role="alert"
+              aria-live="assertive"
+              aria-atomic="true"
+            >
+              <div class="d-flex">
+                <div class="toast-body">OK !</div>
                 <button
                   type="button"
                   class="btn-close btn-close-white me-2 m-auto"

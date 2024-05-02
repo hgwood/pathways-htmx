@@ -9,9 +9,9 @@ export const post: RouteHandler = async (req, res, { params }) => {
   if (!params?.idEc) {
     return notFound(res);
   }
-  await setTimeout(3000);
-  if (Math.random() > 0) {
+  await setTimeout(2000);
+  if (Math.random() > 0.5) {
     return statusCode(res, 500);
   }
-  return ok(res);
+  return ok(res, null, { "HX-Trigger": "toast-success" });
 };

@@ -20,12 +20,12 @@ export const CarteAjoutProfesseur: Component<{
             type="search"
             class="form-control"
             value={recherche}
+            autocomplete="off"
             hx-get={lienRecherche}
             hx-trigger="input changed delay:200ms, search"
             hx-target="#resultatsRechercheProfesseurs"
             hx-swap="outerHTML"
             hx-replace-url="true"
-            // hx-indicator=".htmx-indicator"
           />
         </div>
       </form>

@@ -62,11 +62,11 @@ ul {
 ::view-transition-old(carte-arbre-maquette) {
   /* animation-duration: 5s; */
   /* animation: none; */
-  animation-duration: 5s;
+  /* animation-duration: 5s; */
 }
 
 ::view-transition-new(carte-arbre-maquette) {
-  display: none;
+  /* display: none; */
 }
 
 /* #carteEcForm {
@@ -98,10 +98,10 @@ ul {
 }
 
 /* Entry transition */
-::view-transition-new(carte-ec-form):only-child {
+/* ::view-transition-new(carte-ec-form):only-child {
   animation: 700ms cubic-bezier(0, 0, 0.2, 1) both fade-in,
     700ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
-}
+} */
 
 /* Exit transition */
 /* ::view-transition-old(carte-ec-form):only-child {

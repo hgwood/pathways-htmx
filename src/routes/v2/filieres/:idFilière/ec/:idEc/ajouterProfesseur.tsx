@@ -10,12 +10,12 @@ import {
 import type { RouteHandler } from "../../../../../../utils/route";
 import { html, notFound, redirect } from "../../../../../../utils/httpResponse";
 import { Page } from "../../../../../../components/Page";
-import { EcForm } from "../../../../../../components/EcForm2";
 import { CarteArbreMaquette } from "../../../../../../components/CarteArbreMaquette";
 import { CarteAjoutProfesseur } from "../../../../../../components/CarteAjoutProfesseur";
 import { fetchEcForForm } from "./:idEc";
 import { htmxTriggerName } from "../../../../../../utils/htmx";
 import { ResultatsRechercheProfesseurs } from "../../../../../../components/ResultatsRechercheProfesseurs";
+import { CarteEc } from "../../../../../../components/CarteEc";
 
 export const get: RouteHandler = async (req, res, { params }, url) => {
   if (!params?.idFilière) {
@@ -113,9 +113,10 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
             />
           </div>
           <div class="col overflow-x-hidden">
-            <div class="card p-4">
-              <EcForm ec={ec} />
-            </div>
+            <CarteEc
+              ec={ec}
+              lienFermeture={`/v2/filieres/${params.idFilière}`}
+            />
           </div>
           <div class="col">
             <CarteAjoutProfesseur

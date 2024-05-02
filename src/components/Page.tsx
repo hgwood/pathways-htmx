@@ -15,7 +15,7 @@ export const Page: Component<{
             content="width=device-width, initial-scale=1.0"
           />
           <title safe>{title || "Hello World!"}</title>
-          <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+          <script src="https://unpkg.com/htmx.org@1.9.12"></script>
           <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
             rel="stylesheet"
@@ -37,8 +37,54 @@ export const Page: Component<{
             crossorigin="anonymous"
           ></script>
         </head>
-        <body {...props}>
+        <body
+          // hx-on-toast-success="console.log(event)"
+          hx-on-toast-success="bootstrap.Toast.getOrCreateInstance(htmx.find('#successToast')).show()"
+          hx-on-htmx-error="bootstrap.Toast.getOrCreateInstance(htmx.find('#errorToast')).show()"
+          {...props}
+        >
           <div class="container-fluid">{safeChildren}</div>
+
+          <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div
+              class="toast align-items-center text-bg-danger border-0"
+              id="errorToast"
+              role="alert"
+              aria-live="assertive"
+              aria-atomic="true"
+            >
+              <div class="d-flex">
+                <div class="toast-body">
+                  Une erreur inattendue est survenue.
+                </div>
+                <button
+                  type="button"
+                  class="btn-close btn-close-white me-2 m-auto"
+                  data-bs-dismiss="toast"
+                  aria-label="Close"
+                ></button>
+              </div>
+            </div>
+          </div>
+          <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div
+              class="toast align-items-center text-bg-success border-0"
+              id="successToast"
+              role="alert"
+              aria-live="assertive"
+              aria-atomic="true"
+            >
+              <div class="d-flex">
+                <div class="toast-body">OK !</div>
+                <button
+                  type="button"
+                  class="btn-close btn-close-white me-2 m-auto"
+                  data-bs-dismiss="toast"
+                  aria-label="Close"
+                ></button>
+              </div>
+            </div>
+          </div>
         </body>
       </html>
     </>

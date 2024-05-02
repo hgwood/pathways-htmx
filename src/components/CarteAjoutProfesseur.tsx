@@ -1,13 +1,24 @@
 import { Html, type Component } from "@kitajs/html";
 import type { Professeur } from "../db/types";
+import { ResultatsRechercheProfesseurs } from "./ResultatsRechercheProfesseurs";
+import { CloseButton } from "./CloseButton";
 
 export const CarteAjoutProfesseur: Component<{
   professeurs: Professeur[];
-  recherche: string;
   lienSoumission?: string;
-}> = ({ professeurs, recherche, lienSoumission = "" }) => {
+  recherche: string;
+  lienRecherche?: string;
+  lienFermeture?: string;
+}> = ({
+  professeurs,
+  recherche,
+  lienRecherche = "",
+  lienSoumission = "",
+  lienFermeture = "",
+}) => {
   return (
-    <div class="card p-4">
+    <div id="carteAjoutProfesseur" class="card p-4">
+      {lienFermeture && <CloseButton href={lienFermeture} />}
       <form method="get">
         <div class="input-group">
           <span class="input-group-text">
@@ -18,39 +29,20 @@ export const CarteAjoutProfesseur: Component<{
             type="search"
             class="form-control"
             value={recherche}
-            // hx-post={`${filière.id}/recherche`}
-            // hx-trigger="input changed delay:100ms, search"
-            // hx-target="#arbre-filière"
-            // hx-swap="outerHTML"
-            // hx-indicator=".htmx-indicator"
+            autocomplete="off"
+            hx-get={lienRecherche}
+            hx-trigger="input changed delay:200ms, search"
+            hx-target="#resultatsRechercheProfesseurs"
+            hx-swap="outerHTML"
+            hx-replace-url="true"
           />
         </div>
       </form>
       <form method="post" action={lienSoumission}>
-        <ul class="list-group">
-          {professeurs.map(({ id, nom }, index) => (
-            <li class="list-group-item list-group-item-action">
-              <input
-                class="form-check-input d-none"
-                type="submit"
-                name="idProfesseur"
-                value={String(id)}
-                id={`professorSearchResult${index}`}
-                // hx-post="ajoutProfesseur"
-                // hx-target="#professeurs-table > tbody"
-                // hx-swap="beforeend"
-                // data-bs-dismiss="modal"
-              />
-              <label
-                class="form-check-label stretched-link"
-                for={`professorSearchResult${index}`}
-                safe
-              >
-                {nom}
-              </label>
-            </li>
-          ))}
-        </ul>
+        <ResultatsRechercheProfesseurs
+          professeurs={professeurs}
+          lienSoumission={lienSoumission}
+        />
       </form>
     </div>
   );

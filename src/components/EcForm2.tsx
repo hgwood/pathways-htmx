@@ -53,10 +53,11 @@ export function EcForm({
 
       <fieldset class="my-3">
         <legend>Professeurs</legend>
-        <form class="my-3">
+        <form id="ecFormAssignations" class="my-3">
           <ProfesseursTable assignations={ec.assignations} />
           <a
             href={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}/ajouterProfesseur`}
+            hx-boost="true"
             class="btn btn-secondary btn-small"
             hx-boost="true"
           >
@@ -207,6 +208,8 @@ export const professeursTableColumns = [
         <input
           name="nombreHeures"
           type="number"
+          min="1"
+          required
           value={String(heures)}
           class="form-control"
           hx-post={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}`}
@@ -214,6 +217,7 @@ export const professeursTableColumns = [
           hx-swap="outerHTML"
           hx-trigger="input changed delay:200ms"
           hx-indicator="closest table"
+          hx-on-input="htmx.closest(this, 'form').reportValidity()"
         />
       );
     },
@@ -221,19 +225,37 @@ export const professeursTableColumns = [
   {
     render({ ec, idProfesseur }) {
       return (
-        <button
-          type="button"
-          class="btn btn-sm btn-link"
-          hx-post={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}/supprimerProfesseur`}
-          hx-vals={JSON.stringify({
-            idProfesseur,
-          })}
-          hx-params="not modalité, nombreHeures"
-          hx-target="#ecForm"
-          hx-swap="outerHTML"
-        >
-          <i class="bi bi-trash3"></i>
-        </button>
+        <>
+          <button
+            type="button"
+            class="btn btn-sm"
+            hx-post={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}/supprimerProfesseur`}
+            hx-vals={JSON.stringify({
+              idProfesseur,
+            })}
+            hx-params="not modalité, nombreHeures"
+            hx-target="#ecForm"
+            hx-swap="outerHTML"
+            hx-indicator="closest table"
+            hx-disabled-elt="this"
+          >
+            <i class="bi bi-trash3"></i>
+          </button>
+          <button
+            type="button"
+            class="btn btn-sm"
+            hx-post={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}/envoyerEmailAuProfesseur`}
+            hx-vals={JSON.stringify({
+              idProfesseur,
+            })}
+            hx-params="not modalité, nombreHeures"
+            hx-swap="none"
+            hx-indicator="closest table"
+            hx-disabled-elt="this"
+          >
+            <i class="bi bi-envelope-arrow-up"></i>
+          </button>
+        </>
       );
     },
   },

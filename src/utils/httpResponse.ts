@@ -1,7 +1,7 @@
 import http from "node:http";
 import etag from "etag";
 
-export const ok: HttpResponseWriter<[unknown]> = (res, body) => {
+export const ok: HttpResponseWriter<[unknown?]> = (res, body) => {
   return statusCode(res, 200, {}, body);
 };
 

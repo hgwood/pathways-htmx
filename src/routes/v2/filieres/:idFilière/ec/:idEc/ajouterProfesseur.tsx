@@ -122,6 +122,7 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
               professeurs={professeurs}
               recherche={rechercheProfesseur}
               lienRecherche={`/v2/filieres/${params.idFilière}/ec/${params.idEc}/ajouterProfesseur`}
+              lienFermeture={`/v2/filieres/${params.idFilière}/ec/${params.idEc}`}
             />
           </div>
         </div>

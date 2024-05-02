@@ -1,15 +1,24 @@
 import { Html, type Component } from "@kitajs/html";
 import type { Professeur } from "../db/types";
 import { ResultatsRechercheProfesseurs } from "./ResultatsRechercheProfesseurs";
+import { CloseButton } from "./CloseButton";
 
 export const CarteAjoutProfesseur: Component<{
   professeurs: Professeur[];
   lienSoumission?: string;
   recherche: string;
   lienRecherche?: string;
-}> = ({ professeurs, recherche, lienRecherche = "", lienSoumission = "" }) => {
+  lienFermeture?: string;
+}> = ({
+  professeurs,
+  recherche,
+  lienRecherche = "",
+  lienSoumission = "",
+  lienFermeture = "",
+}) => {
   return (
     <div id="carteAjoutProfesseur" class="card p-4">
+      {lienFermeture && <CloseButton href={lienFermeture} />}
       <form method="get">
         <div class="input-group">
           <span class="input-group-text">

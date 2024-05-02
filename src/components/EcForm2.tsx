@@ -53,7 +53,7 @@ export function EcForm({
 
       <fieldset class="my-3">
         <legend>Professeurs</legend>
-        <form class="my-3">
+        <form id="ecFormAssignations" class="my-3">
           <ProfesseursTable assignations={ec.assignations} />
           <a
             href={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}/ajouterProfesseur`}
@@ -207,6 +207,8 @@ export const professeursTableColumns = [
         <input
           name="nombreHeures"
           type="number"
+          min="1"
+          required
           value={String(heures)}
           class="form-control"
           hx-post={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}`}
@@ -214,6 +216,7 @@ export const professeursTableColumns = [
           hx-swap="outerHTML"
           hx-trigger="input changed delay:200ms"
           hx-indicator="closest table"
+          hx-on-input="htmx.closest(this, 'form').reportValidity()"
         />
       );
     },

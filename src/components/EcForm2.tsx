@@ -231,6 +231,7 @@ export const professeursTableColumns = [
           hx-params="not modalité, nombreHeures"
           hx-target="#ecForm"
           hx-swap="outerHTML"
+          hx-indicator="closest table"
         >
           <i class="bi bi-trash3"></i>
         </button>

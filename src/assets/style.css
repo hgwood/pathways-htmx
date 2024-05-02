@@ -17,7 +17,45 @@ ul {
 .progress {
   transition: width 0.6s ease;
 }
-/*
+
+#carteArbreMaquette {
+  view-transition-name: carte-arbre-maquette;
+}
+
+::view-transition-old(carte-arbre-maquette) {
+  block-size: unset;
+  inline-size: unset;
+}
+
+::view-transition-new(carte-arbre-maquette) {
+  block-size: unset;
+  inline-size: unset;
+}
+
+#carteEcForm {
+  view-transition-name: carte-ec-form;
+}
+
+::view-transition-old(carte-ec-form) {
+  block-size: unset;
+  inline-size: unset;
+}
+
+::view-transition-new(carte-ec-form) {
+  block-size: unset;
+  inline-size: unset;
+}
+
+::view-transition-old(carte-ec-form):only-child {
+  animation: 200ms ease-in-out both slide-to-right,
+    200ms ease-in-out both fade-out;
+}
+
+::view-transition-new(carte-ec-form):only-child {
+  animation: 200ms ease-in-out both slide-from-right,
+    200ms ease-in-out both fade-in;
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -36,75 +74,8 @@ ul {
   }
 }
 
-@keyframes slide-to-left {
+@keyframes slide-to-right {
   to {
-    transform: translateX(-90px);
+    transform: translateX(90px);
   }
 }
-
-.slide-it {
-  view-transition-name: slide-it;
-}
-
-::view-transition-old(slide-it) {
-  animation: 1800ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
-    6000ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
-}
-::view-transition-new(slide-it) {
-  animation: 4200ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
-    6000ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
-} */
-
-#carteArbreMaquette {
-  view-transition-name: carte-arbre-maquette;
-}
-
-::view-transition-old(carte-arbre-maquette) {
-  /* animation-duration: 5s; */
-  /* animation: none; */
-  /* animation-duration: 5s; */
-}
-
-::view-transition-new(carte-arbre-maquette) {
-  /* display: none; */
-}
-
-/* #carteEcForm {
-  view-transition-name: carte-ec-form;
-} */
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-}
-
-@keyframes fade-out {
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes slide-from-right {
-  from {
-    transform: translateX(300px);
-  }
-}
-
-@keyframes slide-to-left {
-  to {
-    transform: translateX(-300px);
-  }
-}
-
-/* Entry transition */
-/* ::view-transition-new(carte-ec-form):only-child {
-  animation: 700ms cubic-bezier(0, 0, 0.2, 1) both fade-in,
-    700ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
-} */
-
-/* Exit transition */
-/* ::view-transition-old(carte-ec-form):only-child {
-  animation: 150ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
-    300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-right;
-} */

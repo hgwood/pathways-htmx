@@ -43,7 +43,6 @@ export const ArbreMaquette: Component<ArbreMaquette> = ({
                 <a
                   href={`/v2/filieres/${semestre.idFilière}/ec/${ec.id}?recherche=${recherche}`}
                   hx-boost="true"
-                  hx-swap="transition:true"
                 >
                   {ec.matière.nom}
                 </a>

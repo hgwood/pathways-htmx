@@ -15,7 +15,7 @@ export const Page: Component<{
             content="width=device-width, initial-scale=1.0"
           />
           <title safe>{title || "Hello World!"}</title>
-          <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+          <script src="https://unpkg.com/htmx.org@1.9.12"></script>
           <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
             rel="stylesheet"

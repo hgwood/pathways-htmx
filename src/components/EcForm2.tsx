@@ -57,7 +57,6 @@ export function EcForm({
           <ProfesseursTable assignations={ec.assignations} />
           <a
             href={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}/ajouterProfesseur`}
-            hx-boost="true"
             class="btn btn-secondary btn-small"
             hx-boost="true"
           >

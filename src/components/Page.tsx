@@ -15,34 +15,33 @@ export const Page: Component<{
             content="width=device-width, initial-scale=1.0"
           />
           <title safe>{title || "Hello World!"}</title>
-          <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+          <script src="/assets/htmx-1.9.12.js"></script>
           <meta
             name="htmx-config"
             content='{"globalViewTransitions": true}'
           ></meta>
           <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            href="/assets/bootstrap-5.3.2.min.css"
             rel="stylesheet"
             integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
             crossorigin="anonymous"
           ></link>
           <link
+            href="/assets/bootswatch-5.3.2-zephyr.min.css"
             rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/zephyr/bootstrap.min.css"
           ></link>
           <link
+            href="/assets/bootstrap-icons-1.11.2.min.css"
             rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css"
           ></link>
           <link rel="stylesheet" href="/assets/style.css"></link>
           <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            src="/assets/bootstrap-5.3.3.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"
           ></script>
         </head>
         <body
-          // hx-on-toast-success="console.log(event)"
           hx-on-toast-success="bootstrap.Toast.getOrCreateInstance(htmx.find('#successToast')).show()"
           hx-on-htmx-error="bootstrap.Toast.getOrCreateInstance(htmx.find('#errorToast')).show()"
           {...props}

@@ -1,5 +1,5 @@
 import { Html } from "@kitajs/html";
-import { like } from "drizzle-orm";
+import { and, eq, isNull, like } from "drizzle-orm";
 import * as streamConsumers from "node:stream/consumers";
 import { db, $assignations, $professeurs } from "../../../../../../db/db";
 import type { RouteHandler } from "../../../../../../utils/route";
@@ -29,9 +29,22 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
 
   const professeurs = !rechercheProfesseur
     ? []
-    : await db().query.$professeurs.findMany({
-        where: like($professeurs.nom, `%${rechercheProfesseur}%`),
-      });
+    : await db()
+        .select({
+          id: $professeurs.id,
+          nom: $professeurs.nom,
+        })
+        .from($professeurs)
+        .leftJoin(
+          $assignations,
+          eq($professeurs.id, $assignations.idProfesseur)
+        )
+        .where(
+          and(
+            like($professeurs.nom, `%${rechercheProfesseur}%`),
+            isNull($assignations.idProfesseur)
+          )
+        );
 
   return html(
     res,

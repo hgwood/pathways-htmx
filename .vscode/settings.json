@@ -8,5 +8,6 @@
             "database": "${workspaceFolder:pathway-htmx}/db.sqlite"
         }
     ],
-    "sqltools.useNodeRuntime": true
+    "sqltools.useNodeRuntime": true,
+    "circleci.persistedProjectSelection": []
 }

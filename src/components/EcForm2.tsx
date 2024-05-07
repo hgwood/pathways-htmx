@@ -51,7 +51,15 @@ export function EcForm({
         <EcFormVolumeHoraire assignations={ec.assignations} />
       </fieldset>
 
-      <fieldset class="my-3">
+      <fieldset
+        class="my-3"
+        hx-post={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}/ajouterProfesseur`}
+        hx-trigger="hello"
+        hx-vals="js:{ idProfesseur: event?.detail.idProfesseur }"
+        hx-target="#ecForm"
+        hx-select="#ecForm"
+        hx-disinherit="*"
+      >
         <legend>Professeurs</legend>
         <form id="ecFormAssignations" class="my-3">
           <ProfesseursTable assignations={ec.assignations} />
@@ -63,6 +71,25 @@ export function EcForm({
             Ajouter un professeur
           </a>
         </form>
+        <input
+          name="rechercheProfesseur"
+          type="text"
+          list="dataListProfesseurs"
+          autocomplete="off"
+          class="form-control placeholder-glow"
+          hx-get={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}/rechercheProfesseur`}
+          hx-trigger="input changed"
+          hx-target="#dataListProfesseurs"
+          // hx-select="default"
+          hx-indicator="this"
+          // hx-on-input="htmx.trigger(this.parentElement, 'hello')"
+          hx-on-input="event.inputType === 'insertReplacementText' && event.data.match(/[0-9]+/) && htmx.trigger(this.parentElement, 'hello', { idProfesseur: event.data })"
+        ></input>
+        <input id="ajouterProfesseur" type="hidden" />
+        <datalist id="dataListProfesseurs">
+          <option value="1" label="Truc"></option>
+          <option value="2" label="Machine"></option>
+        </datalist>
       </fieldset>
 
       <fieldset class="my-3">

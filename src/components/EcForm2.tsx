@@ -219,7 +219,7 @@ export const professeursTableColumns = [
           hx-swap="outerHTML"
           hx-trigger="input changed delay:200ms"
           hx-indicator="closest table"
-          hx-on-input="htmx.closest(this, 'form').reportValidity()"
+          hx-on-input="this.reportValidity()"
         />
       );
     },

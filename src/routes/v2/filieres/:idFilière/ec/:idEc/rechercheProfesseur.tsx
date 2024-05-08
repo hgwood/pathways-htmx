@@ -54,52 +54,6 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
       ))}
     </>
   );
-
-  if (htmxTriggerName(req) === "rechercheProfesseur") {
-    return html(
-      res,
-      <ResultatsRechercheProfesseurs
-        professeurs={professeurs}
-        lienSoumission={`/v2/filieres/${params.idFilière}/ec/${params.idEc}/ajouterProfesseur`}
-      />
-    );
-  }
-
-  return html(
-    res,
-    <Page>
-      <h1>
-        <span safe>{filière.nomInterne}</span>
-        <span> </span>
-        <small safe>{filière.nomOfficiel}</small>
-      </h1>
-      <div class="container-fluid">
-        <div class="row gx-4">
-          <div class="col">
-            <CarteArbreMaquette
-              filière={filière}
-              recherche={recherche}
-              actionRecherche={url?.pathname}
-            />
-          </div>
-          <div class="col overflow-x-hidden">
-            <CarteEc
-              ec={ec}
-              lienFermeture={`/v2/filieres/${params.idFilière}`}
-            />
-          </div>
-          <div class="col">
-            <CarteAjoutProfesseur
-              professeurs={professeurs}
-              recherche={rechercheProfesseur}
-              lienRecherche={`/v2/filieres/${params.idFilière}/ec/${params.idEc}/ajouterProfesseur`}
-              lienFermeture={`/v2/filieres/${params.idFilière}/ec/${params.idEc}`}
-            />
-          </div>
-        </div>
-      </div>
-    </Page>
-  );
 };
 
 export const post: RouteHandler = async (req, res, { params }) => {

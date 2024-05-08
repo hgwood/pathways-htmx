@@ -4,13 +4,7 @@ import * as streamConsumers from "node:stream/consumers";
 import { db, $assignations, $professeurs } from "../../../../../../db/db";
 import type { RouteHandler } from "../../../../../../utils/route";
 import { html, notFound, redirect } from "../../../../../../utils/httpResponse";
-import { Page } from "../../../../../../components/Page";
-import { CarteArbreMaquette } from "../../../../../../components/CarteArbreMaquette";
-import { CarteAjoutProfesseur } from "../../../../../../components/CarteAjoutProfesseur";
 import { fetchEcForForm } from "./:idEc";
-import { htmxTriggerName } from "../../../../../../utils/htmx";
-import { ResultatsRechercheProfesseurs } from "../../../../../../components/ResultatsRechercheProfesseurs";
-import { CarteEc } from "../../../../../../components/CarteEc";
 
 export const get: RouteHandler = async (req, res, { params }, url) => {
   if (!params?.idFilière) {

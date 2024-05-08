@@ -2,6 +2,7 @@ import { Html } from "@kitajs/html";
 import { Table, type Column } from "./Table";
 import type { Assignation, Ec } from "../db/types";
 import { EcFormVolumeHoraire } from "./EcFormVolumeHoraire";
+import { Autocomplete } from "./Autocomplete";
 
 const typeCours = [{ label: "Cours" }, { label: "TD" }, { label: "TP" }];
 
@@ -51,32 +52,20 @@ export function EcForm({
         <EcFormVolumeHoraire assignations={ec.assignations} />
       </fieldset>
 
-      <fieldset
-        class="my-3"
-        hx-post={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}/ajouterProfesseur`}
-        hx-trigger="hello"
-        hx-vals="js:{ idProfesseur: event?.detail.idProfesseur }"
-        hx-target="#ecForm"
-        hx-select="#ecForm"
-        hx-disinherit="*"
-      >
+      <fieldset class="my-3">
         <legend>Professeurs</legend>
         <form id="ecFormAssignations" class="my-3">
           <ProfesseursTable assignations={ec.assignations} />
         </form>
-        <input
+        <Autocomplete
           name="rechercheProfesseur"
-          type="text"
-          list="dataListProfesseurs"
-          autocomplete="off"
-          class="form-control placeholder-glow"
-          hx-get={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}/rechercheProfesseur`}
-          hx-trigger="input changed"
-          hx-target="#dataListProfesseurs"
-          hx-indicator="this"
-          hx-on-input="event.inputType === 'insertReplacementText' && event.data.match(/[0-9]+/) && htmx.trigger(this.parentElement, 'hello', { idProfesseur: event.data })"
-        ></input>
-        <datalist id="dataListProfesseurs"></datalist>
+          hx-post={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}/ajouterProfesseur`}
+          hx-trigger="change"
+          hx-vals="js:{ idProfesseur: event?.detail.value }"
+          hx-target="#ecForm"
+          hx-select="#ecForm"
+          lienRecherche={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}/rechercheProfesseur`}
+        />
       </fieldset>
 
       <fieldset class="my-3">

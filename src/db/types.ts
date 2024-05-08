@@ -1,12 +1,21 @@
 import type {
   $assignations,
   $ec,
+  $filières,
   $matières,
   $professeurs,
   $semestres,
   $ue,
   $volumesHoraire,
 } from "./schema";
+
+export type Filière<KS extends KeySelect<Filière> | AllFields = AllFields> =
+  Selectable<
+    typeof $filières.$inferSelect & {
+      semestres: Semestre[];
+    },
+    KS
+  >;
 
 export type Semestre<KS extends KeySelect<Semestre> | AllFields = AllFields> =
   Selectable<

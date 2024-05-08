@@ -1,22 +1,42 @@
 import { Html } from "@kitajs/html";
 
-export interface Column<T> {
+export interface Column<T, Args extends unknown[] = []> {
   title?: string;
   renderTitle?: () => JSX.Element;
-  render?: (item: T, index: number, items: T[]) => JSX.Element;
+  render?: (item: T, index: number, items: T[], ...args: Args) => JSX.Element;
 }
 
-export function Table<T>({
+export function Table<T, Args extends unknown[]>({
   dataSource,
   columns,
   id,
+  size = "default",
+  borders = "default",
+  hover = false,
+  shadow = true,
+  args,
 }: {
   dataSource: T[];
   columns: Column<T>[];
   id: string;
+  size: "default" | "sm";
+  borders: "default" | "all" | "none";
+  hover: boolean;
+  shadow: boolean;
+  args: Args;
 }) {
   return (
-    <table class="table" id={id}>
+    <table
+      class={[
+        "table",
+        size === "sm" && "table-sm",
+        borders === "all" && "table-bordered",
+        borders === "none" && "table-borderless",
+        hover && "table-hover",
+        !shadow && "shadow-none",
+      ]}
+      id={id}
+    >
       <thead>
         <tr>
           {columns.map(({ title, renderTitle: safeRenderTitle }, index) => (
@@ -42,6 +62,7 @@ export function Table<T>({
               index={index}
               items={items}
               columns={columns}
+              args={args}
             />
           ))
         ) : (
@@ -54,21 +75,23 @@ export function Table<T>({
   );
 }
 
-export function TableRow<T>({
+export function TableRow<T, Args extends unknown[]>({
   item,
   index,
   items,
   columns,
+  args,
 }: {
   item: T;
   index: number;
   items: T[];
-  columns: Column<T>[];
+  columns: Column<T, Args>[];
+  args: Args;
 }) {
   return (
     <tr>
       {columns?.map(({ render: safeRender }) => (
-        <td>{safeRender?.(item, index, items)}</td>
+        <td>{safeRender?.(item, index, items, ...(args ?? []))}</td>
       ))}
     </tr>
   );

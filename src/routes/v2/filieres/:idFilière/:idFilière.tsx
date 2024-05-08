@@ -5,56 +5,13 @@ import type { RouteHandler } from "../../../../utils/route";
 import { html, notFound } from "../../../../utils/httpResponse";
 import { Page } from "../../../../components/Page";
 import { CarteArbreMaquette } from "../../../../components/CarteArbreMaquette";
+import type { Filière } from "../../../../db/types";
 
 export const get: RouteHandler = async (req, res, { params }, url) => {
   if (!params?.idFilière) {
     return notFound(res);
   }
-  const filière = await db().query.$filières.findFirst({
-    columns: {
-      id: true,
-      nomInterne: true,
-      nomOfficiel: true,
-    },
-    where: eq($filières.id, params.idFilière),
-    with: {
-      semestres: {
-        columns: {
-          numéro: true,
-          idFilière: true,
-        },
-        with: {
-          ue: {
-            columns: {
-              nom: true,
-              numéro: true,
-            },
-            with: {
-              ec: {
-                columns: {
-                  id: true,
-                  numéro: true,
-                },
-                with: {
-                  matière: {
-                    columns: {
-                      nom: true,
-                    },
-                  },
-                  volumesHoraire: {
-                    columns: {
-                      heures: true,
-                      minutes: true,
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-  });
+  const filière = await fetchFilièreForArbreMaquette(Number(params.idFilière));
   if (!filière) {
     return notFound(res);
   }
@@ -83,3 +40,56 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
     </Page>
   );
 };
+
+export function fetchFilièreForArbreMaquette(idFilière: Filière["id"]) {
+  return db().query.$filières.findFirst({
+    columns: {
+      id: true,
+      nomInterne: true,
+      nomOfficiel: true,
+    },
+    where: eq($filières.id, idFilière),
+    with: {
+      semestres: {
+        columns: {
+          numéro: true,
+          idFilière: true,
+        },
+        with: {
+          ue: {
+            columns: {
+              nom: true,
+              numéro: true,
+            },
+            with: {
+              semestre: {
+                columns: {
+                  numéro: true,
+                },
+              },
+              ec: {
+                columns: {
+                  id: true,
+                  numéro: true,
+                },
+                with: {
+                  matière: {
+                    columns: {
+                      nom: true,
+                    },
+                  },
+                  volumesHoraire: {
+                    columns: {
+                      heures: true,
+                      minutes: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+}

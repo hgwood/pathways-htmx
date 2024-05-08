@@ -2,13 +2,14 @@ import { Html } from "@kitajs/html";
 import { and, eq } from "drizzle-orm";
 import * as streamConsumers from "node:stream/consumers";
 
-import { db, $filières, $ec, $assignations } from "../../../../../../db/db";
+import { db, $ec, $assignations } from "../../../../../../db/db";
 import type { RouteHandler } from "../../../../../../utils/route";
 import { html, notFound } from "../../../../../../utils/httpResponse";
 import { Page } from "../../../../../../components/Page";
 import { CarteArbreMaquette } from "../../../../../../components/CarteArbreMaquette";
 import { EcFormVolumeHoraire } from "../../../../../../components/EcFormVolumeHoraire";
 import { CarteEc } from "../../../../../../components/CarteEc";
+import { fetchFilièreForArbreMaquette } from "../../:idFilière";
 
 export const get: RouteHandler = async (req, res, { params }, url) => {
   if (!params?.idFilière) {
@@ -17,48 +18,7 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
   if (!params?.idEc) {
     return notFound(res);
   }
-  const filière = await db().query.$filières.findFirst({
-    columns: {
-      id: true,
-      nomInterne: true,
-      nomOfficiel: true,
-    },
-    where: eq($filières.id, params.idFilière),
-    with: {
-      semestres: {
-        columns: {
-          numéro: true,
-          idFilière: true,
-          id: true,
-        },
-        with: {
-          ue: {
-            columns: {
-              nom: true,
-              numéro: true,
-              id: true,
-            },
-            with: {
-              ec: {
-                columns: {
-                  id: true,
-                  numéro: true,
-                },
-                with: {
-                  matière: {
-                    columns: {
-                      nom: true,
-                      id: true,
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-  });
+  const filière = await fetchFilièreForArbreMaquette(params.idFilière);
   if (!filière) {
     return notFound(res);
   }

@@ -43,7 +43,8 @@ export const Page: Component<{
         </head>
         <body
           hx-on-toast-success="bootstrap.Toast.getOrCreateInstance(htmx.find('#successToast')).show()"
-          hx-on-htmx-error="bootstrap.Toast.getOrCreateInstance(htmx.find('#errorToast')).show()"
+          hx-on-htmx-response-error="bootstrap.Toast.getOrCreateInstance(htmx.find('#errorToast')).show()"
+          hx-on-htmx-target-error="bootstrap.Toast.getOrCreateInstance(htmx.find('#errorToast')).show()"
           {...props}
         >
           <div class="container-fluid">{safeChildren}</div>

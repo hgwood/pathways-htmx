@@ -61,7 +61,7 @@ export function EcForm({
           name="rechercheProfesseur"
           hx-post={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}/ajouterProfesseur`}
           hx-trigger="change"
-          hx-vals="js:{ idProfesseur: event?.detail.value }"
+          hx-vals="js:{ idProfesseur: event?.detail?.value }"
           hx-target="#ecForm"
           hx-select="#ecForm"
           lienRecherche={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}/rechercheProfesseur`}

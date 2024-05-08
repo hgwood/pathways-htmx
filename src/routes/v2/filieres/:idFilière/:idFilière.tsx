@@ -21,10 +21,12 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
   return html(
     res,
     <Page>
-      <h1>
+      <h1 class="mx-3">
         <span safe>{filière.nomInterne}</span>
         <span> </span>
-        <small safe>{filière.nomOfficiel}</small>
+        <small class="h5 text-body-secondary" safe>
+          {filière.nomOfficiel}
+        </small>
       </h1>
       <div class="container">
         <div class="row gx-4">

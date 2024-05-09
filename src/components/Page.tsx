@@ -16,10 +16,6 @@ export const Page: Component<{
           />
           <title safe>{title || "Hello World!"}</title>
           <script src="/assets/htmx-1.9.12.js"></script>
-          <meta
-            name="htmx-config"
-            content='{"globalViewTransitions": true}'
-          ></meta>
           <link
             href="/assets/bootstrap-5.3.2.min.css"
             rel="stylesheet"

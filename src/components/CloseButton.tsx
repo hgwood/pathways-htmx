@@ -9,6 +9,7 @@ export const CloseButton: Component<{
       class="btn-close position-absolute top-0 end-0"
       aria-label="Close"
       hx-boost="true"
+      hx-swap="transition:true"
     ></a>
   );
 };

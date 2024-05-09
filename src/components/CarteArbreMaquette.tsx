@@ -59,7 +59,7 @@ export const CarteArbreMaquette: Component<{
             hx-get={actionRecherche}
             hx-trigger="input changed delay:200ms, search"
             hx-target="#arbreFilière"
-            hx-swap="outerHTML"
+            hx-swap="outerHTML transition:true"
             hx-select="#arbreFilière"
             hx-replace-url="true"
           />
@@ -125,6 +125,7 @@ const columns = [
             <a
               href={`/v2/filieres/${filière.id}/ec/${item.id}?recherche=${recherche}`}
               hx-boost="true"
+              hx-swap="transition:true"
               class="text-decoration-none"
               safe
             >

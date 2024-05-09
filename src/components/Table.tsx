@@ -19,11 +19,11 @@ export function Table<T, Args extends unknown[]>({
   dataSource: T[];
   columns: Column<T>[];
   id: string;
-  size: "default" | "sm";
-  borders: "default" | "all" | "none";
-  hover: boolean;
-  shadow: boolean;
-  args: Args;
+  size?: "default" | "sm";
+  borders?: "default" | "all" | "none";
+  hover?: boolean;
+  shadow?: boolean;
+  args?: Args;
 }) {
   return (
     <table

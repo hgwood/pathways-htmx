@@ -133,7 +133,8 @@ const columns = [
           );
           break;
       }
-      return <div class={className}>{content ?? label}</div>;
+      const safeLabel = label;
+      return <div class={className}>{content ?? safeLabel}</div>;
     },
   },
 ] satisfies Column<

@@ -47,6 +47,7 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
               filière={filière}
               recherche={recherche}
               actionRecherche={url?.pathname}
+              selected={Number(params.idEc)}
             />
           </div>
           <div class="col h-100">

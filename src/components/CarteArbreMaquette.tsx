@@ -22,7 +22,8 @@ export const CarteArbreMaquette: Component<{
   }>;
   recherche: string;
   actionRecherche?: string;
-}> = ({ filière, recherche, actionRecherche }) => {
+  selected?: number;
+}> = ({ filière, recherche, actionRecherche, selected }) => {
   const élémentsMaquette = [];
   for (const semestre of filière.semestres) {
     élémentsMaquette.push({ ...semestre, type: "semestre" });
@@ -74,6 +75,7 @@ export const CarteArbreMaquette: Component<{
         hover={true}
         shadow={false}
         args={[filière, recherche]}
+        active={({ type, id }) => type === "ec" && id === selected}
       />
     </div>
   );

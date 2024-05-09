@@ -6,7 +6,7 @@ export interface Column<T, Args extends unknown[] = []> {
   render?: (item: T, index: number, items: T[], ...args: Args) => JSX.Element;
 }
 
-export function Table<T, Args extends unknown[]>({
+export function Table<T, Args extends unknown[] = []>({
   dataSource,
   columns,
   id,
@@ -15,6 +15,7 @@ export function Table<T, Args extends unknown[]>({
   hover = false,
   shadow = true,
   args,
+  active,
 }: {
   dataSource: T[];
   columns: Column<T>[];
@@ -24,6 +25,7 @@ export function Table<T, Args extends unknown[]>({
   hover?: boolean;
   shadow?: boolean;
   args?: Args;
+  active?: (item: T, index: number, items: T[], ...args: Args) => boolean;
 }) {
   return (
     <table
@@ -63,6 +65,7 @@ export function Table<T, Args extends unknown[]>({
               items={items}
               columns={columns}
               args={args}
+              active={active}
             />
           ))
         ) : (
@@ -75,21 +78,25 @@ export function Table<T, Args extends unknown[]>({
   );
 }
 
-export function TableRow<T, Args extends unknown[]>({
+export function TableRow<T, Args extends unknown[] = []>({
   item,
   index,
   items,
   columns,
   args,
+  active,
 }: {
   item: T;
   index: number;
   items: T[];
   columns: Column<T, Args>[];
-  args: Args;
+  args?: Args;
+  active?: (item: T, index: number, items: T[], ...args: Args) => boolean;
 }) {
   return (
-    <tr>
+    <tr
+      class={[active?.(item, index, items, ...(args ?? [])) && "table-active"]}
+    >
       {columns?.map(({ render: safeRender }) => (
         <td>{safeRender?.(item, index, items, ...(args ?? []))}</td>
       ))}

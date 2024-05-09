@@ -1,9 +1,5 @@
-.htmx-request .htmx-request-hide {
-  display: none;
-}
-
-ul {
-  list-style-type: none;
+* {
+  scrollbar-width: thin;
 }
 
 #arbre-filière h2,

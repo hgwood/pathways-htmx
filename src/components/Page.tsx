@@ -3,11 +3,12 @@ import type { Component } from "@kitajs/html";
 
 export const Page: Component<{
   title?: string;
-}> = ({ title, children: safeChildren, ...props }) => {
+  class?: string;
+}> = ({ title, class: className = "", children: safeChildren, ...props }) => {
   return (
     <>
       {"<!doctype html>"}
-      <html lang="en">
+      <html lang="en" class="vh-100">
         <head>
           <meta charset="UTF-8" />
           <meta
@@ -41,9 +42,10 @@ export const Page: Component<{
           hx-on-toast-success="bootstrap.Toast.getOrCreateInstance(htmx.find('#successToast')).show()"
           hx-on-htmx-response-error="bootstrap.Toast.getOrCreateInstance(htmx.find('#errorToast')).show()"
           hx-on-htmx-target-error="bootstrap.Toast.getOrCreateInstance(htmx.find('#errorToast')).show()"
+          class="h-100"
           {...props}
         >
-          <div class="container-fluid">{safeChildren}</div>
+          <div class={`container-fluid h-100 ${className}`}>{safeChildren}</div>
 
           <div class="toast-container position-fixed top-0 end-0 p-3">
             <div

@@ -45,7 +45,7 @@ export const CarteArbreMaquette: Component<{
     }
   }
   return (
-    <div id="carteArbreMaquette" class="card p-4">
+    <div id="carteArbreMaquette" class="card p-4 h-100 overflow-auto">
       <form method="GET">
         <div class="input-group">
           <span class="input-group-text">

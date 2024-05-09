@@ -7,7 +7,7 @@ export const CarteEc: Component<{
   lienFermeture?: string;
 }> = ({ ec, lienFermeture = "" }) => {
   return (
-    <div id="carteEcForm" class="card p-4">
+    <div id="carteEcForm" class="card p-4 h-100 overflow-auto">
       <CloseButton href={lienFermeture} />
       <EcForm ec={ec} />
     </div>

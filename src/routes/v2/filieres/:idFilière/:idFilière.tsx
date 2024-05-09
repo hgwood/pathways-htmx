@@ -20,7 +20,7 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
 
   return html(
     res,
-    <Page>
+    <Page class="d-flex flex-column">
       <h1 class="mx-3">
         <span safe>{filière.nomInterne}</span>
         <span> </span>
@@ -28,9 +28,9 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
           {filière.nomOfficiel}
         </small>
       </h1>
-      <div class="container">
-        <div class="row gx-4">
-          <div class="col">
+      <div class="container overflow-hidden">
+        <div class="row gx-4 h-100">
+          <div class="col h-100">
             <CarteArbreMaquette
               filière={filière}
               recherche={recherche}

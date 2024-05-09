@@ -36,6 +36,12 @@ export const CarteArbreMaquette: Component<{
           élémentsMaquette.push({ ...ec, type: "ec" });
         }
       }
+      if (élémentsMaquette.at(-1)?.type === "ue") {
+        élémentsMaquette.pop();
+      }
+    }
+    if (élémentsMaquette.at(-1)?.type === "semestre") {
+      élémentsMaquette.pop();
     }
   }
   return (
@@ -119,6 +125,7 @@ const columns = [
             <a
               href={`/v2/filieres/${filière.id}/ec/${item.id}?recherche=${recherche}`}
               hx-boost="true"
+              class="text-decoration-none"
               safe
             >
               {label}

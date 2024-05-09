@@ -41,7 +41,7 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
         </small>
       </h1>
       <div class="container-fluid overflow-hidden">
-        <div class="row gx-4 h-100">
+        <div class="row row-cols-2 gx-4 h-100">
           <div class="col h-100">
             <CarteArbreMaquette
               filière={filière}

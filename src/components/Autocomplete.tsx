@@ -30,7 +30,8 @@ export const Autocomplete: Component<{
           hx-get={lienRecherche}
           hx-trigger="input changed" // no delay here because https://github.com/bigskysoftware/htmx/issues/1189
           hx-target={`#${dataListId}`}
-          hx-on-input="event.inputType === 'insertReplacementText' && event.data.match(/[0-9]+/) && htmx.trigger(this.parentElement, 'change', { value: event.data }) && (this.value = '')"
+          hx-on-input="event.inputType === 'insertReplacementText' && htmx.trigger(this, 'change', event)"
+          hx-on-change="event.target.value.match(/[0-9]+/) && htmx.trigger(this.parentElement, 'autocomplete', { value: event.target.value }) && (this.value = '')"
           hx-indicator={`#${autocompleteId}`}
           hx-sync="closest .autocomplete:abort"
         ></input>

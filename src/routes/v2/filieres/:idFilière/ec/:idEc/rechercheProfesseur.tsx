@@ -5,7 +5,6 @@ import { db, $assignations, $professeurs } from "../../../../../../db/db";
 import type { RouteHandler } from "../../../../../../utils/route";
 import { html, notFound, redirect } from "../../../../../../utils/httpResponse";
 import { fetchEcForForm } from "./:idEc";
-import { Autocomplete } from "../../../../../../components/Autocomplete";
 
 export const get: RouteHandler = async (req, res, { params }, url) => {
   if (!params?.idFilière) {
@@ -43,17 +42,11 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
 
   return html(
     res,
-    <Autocomplete
-      id="rechercheProfesseur"
-      name="rechercheProfesseur"
-      hx-post={`/v2/filieres/${params.idFilière}/ec/${params.idEc}/ajouterProfesseur`}
-      hx-trigger="autocomplete"
-      hx-target="#ecForm"
-      hx-select="#ecForm"
-      lienRecherche={`/v2/filieres/${params.idFilière}/ec/${params.idEc}/rechercheProfesseur`}
-      value={rechercheProfesseur}
-      options={professeurs.map(({ nom }) => nom)}
-    />
+    <>
+      {professeurs.map(({ nom, id }) => (
+        <option value={String(id)} label={nom}></option>
+      ))}
+    </>
   );
 };
 

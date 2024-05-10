@@ -140,20 +140,9 @@ export const post: RouteHandler = async (req, res, { params }) => {
     return notFound(res);
   }
   const form = new URLSearchParams(await streamConsumers.text(req));
-  let idProfesseur: number | undefined = Number(form.get("idProfesseur"));
-  const rechercheProfesseur = form.get("rechercheProfesseur");
+  const idProfesseur = Number(form.get("idProfesseur"));
   if (Number.isNaN(idProfesseur)) {
     // FIXME: return bad request
-    return notFound(res);
-  }
-  if (!idProfesseur && rechercheProfesseur) {
-    const [professeur] = await db()
-      .select({ id: $professeurs.id })
-      .from($professeurs)
-      .where(eq($professeurs.nom, rechercheProfesseur));
-    idProfesseur = professeur?.id;
-  }
-  if (!idProfesseur) {
     return notFound(res);
   }
   await db().insert($assignations).values({ idProfesseur, idEc: params.idEc });

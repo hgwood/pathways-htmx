@@ -58,10 +58,10 @@ export function EcForm({
           <ProfesseursTable assignations={ec.assignations} />
         </form>
         <Autocomplete
-          id="rechercheProfesseur"
           name="rechercheProfesseur"
           hx-post={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}/ajouterProfesseur`}
-          hx-trigger="autocomplete changed"
+          hx-trigger="autocomplete"
+          hx-vals="js:{ idProfesseur: event?.detail?.value }"
           hx-target="#ecForm"
           hx-select="#ecForm"
           lienRecherche={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}/rechercheProfesseur`}

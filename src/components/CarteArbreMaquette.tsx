@@ -87,7 +87,7 @@ const columns = [
       let label, className;
       switch (item.type) {
         case "semestre":
-          label = "S";
+          label = `S ${item.numéro}`;
           className = "text-bg-warning";
           break;
         case "ue":
@@ -95,7 +95,9 @@ const columns = [
           className = "text-bg-success";
           break;
         case "ec":
-          label = "EC";
+          label = `${item.ue.semestre.numéro}${item.ue.numéro}-${String(
+            item.numéro
+          ).padStart(2, "0")}`;
           className = "text-bg-info";
           break;
       }

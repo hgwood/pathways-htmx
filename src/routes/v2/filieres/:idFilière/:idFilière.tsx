@@ -86,6 +86,18 @@ export function fetchFilièreForArbreMaquette(idFilière: Filière["id"]) {
                       minutes: true,
                     },
                   },
+                  ue: {
+                    columns: {
+                      numéro: true,
+                    },
+                    with: {
+                      semestre: {
+                        columns: {
+                          numéro: true,
+                        },
+                      },
+                    },
+                  },
                 },
               },
             },

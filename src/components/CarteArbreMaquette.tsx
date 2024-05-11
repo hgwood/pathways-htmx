@@ -74,7 +74,6 @@ export const CarteArbreMaquette: Component<{
         borders="none"
         hover={true}
         shadow={false}
-        includeIndicator={false}
         args={[filière, recherche]}
         active={({ type, id }) => type === "ec" && id === selected}
       />
@@ -84,7 +83,6 @@ export const CarteArbreMaquette: Component<{
 
 const columns = [
   {
-    title: "#",
     render(item) {
       let label, className;
       switch (item.type) {
@@ -111,7 +109,6 @@ const columns = [
     },
   },
   {
-    title: "Nom",
     render(item, index, items, filière, recherche) {
       let label;
       let className;
@@ -143,17 +140,6 @@ const columns = [
       }
       const safeLabel = label;
       return <div class={className}>{content ?? safeLabel}</div>;
-    },
-  },
-  {
-    title: "Profs",
-    render(item) {
-      if (item.type === "ec" && item.assignations.length > 0) {
-        return (
-          <span style="white-space: nowrap">{item.assignations.length}</span>
-        );
-      }
-      return <></>;
     },
   },
 ] satisfies Column<

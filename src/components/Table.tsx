@@ -14,7 +14,6 @@ export function Table<T, Args extends unknown[] = []>({
   borders = "default",
   hover = false,
   shadow = true,
-  includeIndicator = true,
   args,
   active,
 }: {
@@ -25,7 +24,6 @@ export function Table<T, Args extends unknown[] = []>({
   borders?: "default" | "all" | "none";
   hover?: boolean;
   shadow?: boolean;
-  includeIndicator?: boolean;
   args?: Args;
   active?: (item: T, index: number, items: T[], ...args: Args) => boolean;
 }) {
@@ -46,7 +44,7 @@ export function Table<T, Args extends unknown[] = []>({
           {columns.map(({ title, renderTitle: safeRenderTitle }, index) => (
             <th scope="col">
               {title ?? safeRenderTitle?.()}
-              {includeIndicator && index === columns.length - 1 && (
+              {index === columns.length - 1 && (
                 <div
                   class="htmx-indicator spinner-border spinner-border-sm float-end"
                   role="status"

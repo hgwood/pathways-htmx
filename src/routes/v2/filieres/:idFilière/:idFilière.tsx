@@ -98,7 +98,6 @@ export function fetchFilièreForArbreMaquette(idFilière: Filière["id"]) {
                       },
                     },
                   },
-                  assignations: {},
                 },
               },
             },

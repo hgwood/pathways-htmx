@@ -5,6 +5,7 @@ import { db, $assignations, $professeurs } from "../../../../../../db/db";
 import type { RouteHandler } from "../../../../../../utils/route";
 import { html, notFound, redirect } from "../../../../../../utils/httpResponse";
 import { fetchEcForForm } from "./:idEc";
+import { AutocompleteResult } from "../../../../../../components/Autocomplete";
 
 export const get: RouteHandler = async (req, res, { params }, url) => {
   if (!params?.idFilière) {
@@ -44,7 +45,7 @@ export const get: RouteHandler = async (req, res, { params }, url) => {
     res,
     <>
       {professeurs.map(({ nom, id }) => (
-        <option value={String(id)} label={nom}></option>
+        <AutocompleteResult value={String(id)} label={nom} />
       ))}
     </>
   );

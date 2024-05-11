@@ -54,3 +54,10 @@ export const Autocomplete: Component<{
     </>
   );
 };
+
+export const AutocompleteResult: Component<{
+  label?: string;
+  value: string;
+}> = ({ label, value }) => {
+  return <option value={value} label={label}></option>;
+};

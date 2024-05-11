@@ -38,11 +38,6 @@ export function EcForm({
     };
   }>;
 }) {
-  const typeExamen = [
-    { label: "Ecrit" },
-    { label: "Oral" },
-    { label: "Pratique" },
-  ];
   return (
     <div id="ecForm">
       <h2 class="text-truncate">{ec.matière.nom}</h2>
@@ -58,6 +53,7 @@ export function EcForm({
           <ProfesseursTable assignations={ec.assignations} />
         </form>
         <Autocomplete
+          id="rechercheProfesseur"
           name="rechercheProfesseur"
           hx-post={`/v2/filieres/${ec.ue.semestre.idFilière}/ec/${ec.id}/ajouterProfesseur`}
           hx-trigger="autocomplete"

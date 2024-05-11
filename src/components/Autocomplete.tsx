@@ -1,17 +1,16 @@
-import { randomBytes } from "crypto";
 import Html, { type Component } from "@kitajs/html";
 import { Spinner } from "./Spinner";
 
 export const Autocomplete: Component<{
+  id: string;
   name: string;
   lienRecherche: string;
-}> = ({ name, lienRecherche, ...props }) => {
-  const autocompleteId = "autcomplete" + randomBytes(16).toString("hex");
-  const dataListId = autocompleteId + "DataList";
+}> = ({ id, name, lienRecherche, ...props }) => {
+  const dataListId = id + "DataList";
   return (
     <>
       <div
-        id={autocompleteId}
+        id={id}
         {...props}
         hx-disinherit="*"
         class="input-group autocomplete"
@@ -32,7 +31,7 @@ export const Autocomplete: Component<{
           hx-target={`#${dataListId}`}
           hx-on-input="event.inputType === 'insertReplacementText' && htmx.trigger(this, 'change', event)"
           hx-on-change="event.target.value.match(/[0-9]+/) && htmx.trigger(this.parentElement, 'autocomplete', { value: event.target.value }) && (this.value = '')"
-          hx-indicator={`#${autocompleteId}`}
+          hx-indicator={`#${id}`}
           hx-sync="closest .autocomplete:abort"
         ></input>
       </div>
